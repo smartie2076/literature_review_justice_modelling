@@ -1,0 +1,1 @@
+"Energy model*" AND ("Communit*" OR "Prosumer*" OR "Household*" OR "Consumer*") AND ("Energy justice" OR "Environmental justice" OR "Just transition" OR "Climate justice" OR "Distributional justice")

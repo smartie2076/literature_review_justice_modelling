@@ -138,7 +138,9 @@ def process_counts_to_plots(data):
     plt.close()
 
     # Keyword incidence relative to word count
-    data[RELATIVE_COUNT] = data[TOTAL_COUNT] / data[f"{WORD_COUNT}-{title_and_abstract}"]
+    data[RELATIVE_COUNT] = (
+        data[TOTAL_COUNT] / data[f"{WORD_COUNT}-{title_and_abstract}"]
+    )
     data[RELATIVE_COUNT].plot.hist(bins=20)
     plt.xlabel("Count of keywords in title and abstract, relative to word count")
     plt.ylabel("Number of papers")

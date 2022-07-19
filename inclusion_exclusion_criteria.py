@@ -3,7 +3,7 @@ import os
 import sys
 
 intro = "Is the paper"
-inclusion_criteria_title = ["promising a relation with energy issues?"]
+inclusion_criteria_title = ["implying a relation with energy issues?"]
 
 inclusion_criteria_title_and_abstract = [
     "dealing with energy supply?",
@@ -19,7 +19,7 @@ inclusion_criteria_title_and_abstract = [
 
 exclusion = [""]
 
-file = "2022-06-10-webofscience-5-search-term-groups-no-transport-merged-Count.csv"
+file = "2022-07-19-Final-Keywords-Publications-merged-Count.csv"
 output_file = file[:-4] + "-votes.csv"
 
 AUTHORS = "Authors"
@@ -90,6 +90,10 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title = False):
             ):
                 vote = data.loc[paper_id, inclusion_criteria[i]]
                 skip = 2
+            # If keywords from group energy services, pass title as relevant
+            elif (title is True) and ("Energ" in data[TITLE][paper_id] or "energ" in data[TITLE][paper_id] or "electr" in data[TITLE][paper_id] or "Electr" in data[TITLE][paper_id] or "heat" in data[TITLE][paper_id] or "Heat" in data[TITLE][paper_id]):
+                vote = True
+                skip = 2
             else:
                 # No value for inclusion criteria stored - print information to receive a vote
                 paper_author_year_title_abstract(data, paper_id, title)
@@ -131,6 +135,8 @@ def save_and_quit(data):
     print(f"Saved outputs to {output_file}.")
     print(
         f"Number of assessed titles: {len(data.index) - data[inclusion_criteria_title[0]].isna().sum()}")
+    print(
+        f"Number of potentially relevant titles: {data[inclusion_criteria_title[0]].sum()}")
 
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
@@ -138,8 +144,7 @@ def save_and_quit(data):
         print(
             f"Number of papers left to assess (estimate): {data[inclusion_criteria_title_and_abstract[0]].isna().sum()}"
         )
-        include = inclusion_criteria_title + inclusion_criteria_title_and_abstract
-        data["Include"]=[sum([data.loc[id, include[i]] for i in range(0, 7)]) == 7 for id in data.index]
+        data["Include"]=[sum([data.loc[id, inclusion_criteria_title_and_abstract[i]] for i in range(0, 6)]) == 6 for id in data.index]
         print(f"Papers are relevant, if they fullfill the following inclusion criteria: "
               f"\n Does the title {inclusion_criteria_title[0]} And does the paper... {inclusion_criteria_title_and_abstract[0:5]}.")
         print(f"Intermediate number of relevant papers: {sum(data['Include'])}")
@@ -168,7 +173,7 @@ def evaluate_title_and_abstract():
 
     for i in data.index:
         # Only assess entry if title fullfills inclusion criteria for the title
-        if data.loc[id, inclusion_criteria_title[0]] is True:
+        if data.loc[id, inclusion_criteria_title[0]] is True or data.loc[id, inclusion_criteria_title[0]] is None:
             # Assess the inclusion criteria for the abstract and title together
             get_vote_on_paper(data, paper_id=i, inclusion_criteria=inclusion_criteria_title_and_abstract)
 

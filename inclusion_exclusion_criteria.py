@@ -1,11 +1,20 @@
 import pandas as pd
+import os
+import sys
 
 intro = "Is the paper"
-inclusion = [
-    "dealing with the energy transition?",
-    "highlighting justice as a core aspect of planning?",
-    "working with a model or framework?",
-    "mentioning a relevant justice aspect?",
+inclusion_criteria_title = ["promising a relation with energy issues?"]
+
+inclusion_criteria_title_and_abstract = [
+    "dealing with energy supply?",
+    "highlighting the relevance of justice in planning?",
+    "investigating the impact of policies on consumers?"
+    "offer a structurized approach via eg a model or framework?",
+    "clearly stating at least one justice indicator?",
+    "hinting at at least one relevant justice indicator?",
+    "otherwise relevant for the paper?",
+    "otherwise relevant for my PhD?",
+    "otherwise relevant for people I know?"
 ]
 
 exclusion = [""]
@@ -18,33 +27,81 @@ YEAR = "Publication Year"
 TITLE = "Article Title"
 ABSTRACT = "Abstract"
 
-# import only system from os
-import os
+KEYWORD_LIST = [
+    "energ",
+    "electricit",
+    "heat",
+    "climate",
+    "carbon",
+    "sustainab",
+    "renewable",
+    "environment",
+    "transition",
+    "transformation",
+    "development",
+    "pathway",
+    "strateg",
+    "polic",
+    "planning",
+    "model",
+    "indicator",
+    "simulation",
+    "optimi",
+    "tool",
+    "framework",
+    "scenario",
+    "consumer",
+    "household",
+    "prosumer",
+    "soci",
+    "people",
+    "minorit",
+    "population",
+    "communit",
+    "justice",
+    "equit",
+    "equalit",
+]
+KEYWORD_LIST += [key.capitalize() for key in KEYWORD_LIST]
 
 
-def get_vote_on_paper(data, paper_id):
-    os.system("cls")
+def bold_keys(string):
+    for word in KEYWORD_LIST:
+        string = string.replace(word, "\033[1m"+word+ '\033[0m')
+    return string
 
-    print(f"{data[AUTHORS][paper_id]}")
+def paper_author_year_title_abstract(data, paper_id, title):
+    # Display paper info on screen
+    print(f"\n {data[AUTHORS][paper_id]}")
     print(f"{data[YEAR][paper_id]}\n")
-    print(f"{data[TITLE][paper_id]}\n")
-    print(f"{data[ABSTRACT][paper_id]}\n \n")
+    print(f"{bold_keys(data[TITLE][paper_id])}\n")
+    if title is False:
+        print(f"{bold_keys(data[ABSTRACT][paper_id])}\n \n")
     print(intro)
 
-    for i in range(0, len(inclusion)):
+def get_vote_on_paper(data, paper_id, inclusion_criteria, title = False):
+    for i in range(0, len(inclusion_criteria)):
         skip = 0
         try:
+            # Check if the old file already included a vote on the inclusion criteria
             if (
-                data.loc[paper_id, inclusion[i]] is True
-                or data.loc[paper_id, inclusion[i]] is False
+                data.loc[paper_id, inclusion_criteria[i]] is True
+                or data.loc[paper_id, inclusion_criteria[i]] is False
             ):
-                vote = data.loc[paper_id, inclusion[i]]
+                vote = data.loc[paper_id, inclusion_criteria[i]]
                 skip = 2
+            else:
+                # No value for inclusion criteria stored - print information to receive a vote
+                paper_author_year_title_abstract(data, paper_id, title)
         except:
-            pass
+            # May happen if the column for the inclusion criteria does not exist jet
+            paper_author_year_title_abstract(data, paper_id, title)
 
+        # Get a vote on the inclusion criteria for the paper.
+        # Valid inputs: Affirmative, Negative, Pass, Exit (premature script exit)
+        # Ask one time for a correct entry, if the input was invalid, but add "vote=None" if the input was invalid twice
         while skip < 2:
-            vote = input(inclusion[i])
+            vote = input(inclusion_criteria[i])
             if vote in ["y", "yes", "j", "ja", "1", "TRUE", "true"]:
                 vote = True
                 skip = 2
@@ -64,13 +121,30 @@ def get_vote_on_paper(data, paper_id):
                 if skip == 2:
                     vote = None
 
-        data.loc[paper_id, inclusion[i]] = vote
+        # Save vote to data frame
+        data.loc[paper_id, inclusion_criteria[i]] = vote
 
 
 def save_and_quit(data):
+    # In case of manual termination or end of data
     data.to_csv(output_file)
     print(f"Saved outputs to {output_file}.")
-    os._exit()
+    print(
+        f"Number of assessed titles: {len(data.index) - data[inclusion_criteria_title[0]].isna().sum()}")
+
+    # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
+    if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
+        print(f"Number of assessed papers (estimate): {len(data.index)-data[inclusion_criteria_title_and_abstract[0]].isna().sum()}")
+        print(
+            f"Number of papers left to assess (estimate): {data[inclusion_criteria_title_and_abstract[0]].isna().sum()}"
+        )
+        include = inclusion_criteria_title + inclusion_criteria_title_and_abstract
+        data["Include"]=[sum([data.loc[id, include[i]] for i in range(0, 7)]) == 7 for id in data.index]
+        print(f"Papers are relevant, if they fullfill the following inclusion criteria: "
+              f"\n Does the title {inclusion_criteria_title[0]} And does the paper... {inclusion_criteria_title_and_abstract[0:5]}.")
+        print(f"Intermediate number of relevant papers: {sum(data['Include'])}")
+        print(f"Intermediate number of otherwise relevant papers: f{sum(data[inclusion_criteria_title_and_abstract[6]])}")
+    sys.exit()
 
 
 def evaluate_title_and_abstract():
@@ -81,12 +155,21 @@ def evaluate_title_and_abstract():
     print(
         f"Number of literature to assess after merge with old votes: {len(data.index)}"
     )
-    print(
-        f"Number of papers left to assess (approximately): {data[inclusion[0]].isna().sum()}"
-    )
+    try:
+        print(
+            f"Number of papers left to assess (approximately): {data[inclusion_criteria_title_and_abstract[0]].isna().sum()}"
+        )
+    except:
+        pass
 
     for i in data.index:
-        get_vote_on_paper(data, paper_id=i)
+        # Get vote on the paper title first
+        get_vote_on_paper(data, paper_id=i, inclusion_criteria=inclusion_criteria_title, title = True)
 
+    for i in data.index:
+        # Only assess entry if title fullfills inclusion criteria for the title
+        if data.loc[id, inclusion_criteria_title[0]] is True:
+            # Assess the inclusion criteria for the abstract and title together
+            get_vote_on_paper(data, paper_id=i, inclusion_criteria=inclusion_criteria_title_and_abstract)
 
 evaluate_title_and_abstract()

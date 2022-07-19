@@ -2,24 +2,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 files = [
-    "2022-06-10-webofscience-5-search-term-groups-no-transport-0-1000.xls",
-    "2022-06-10-webofscience-5-search-term-groups-no-transport-1001-1126.xls",
+    "2022-07-19-Final-Keywords-Part-1.xls",
+    "2022-07-19-Final-Keywords-Part-2.xls",
 ]
 
-result_file_name = "2022-06-10-webofscience-5-search-term-groups-no-transport-merged"
+result_file_name = "2022-07-19-Final-Keywords-merged"
 
 keywords_search_string = [
-    "Energy",
+    "energy",
     "electricit",
     "heat",
-    "Climate",
-    "decarbon",
+    "climate",
+    "carbon",
     "sustainab",
     "renewable",
     "environment",
-    "green",
-    "carbon",
-    "clean",
     "transition",
     "transformation",
     "development",
@@ -33,36 +30,20 @@ keywords_search_string = [
     "optimi",
     "tool",
     "framework",
-    "Consumer",
+    "scenario",
+    "consumer",
     "household",
     "prosumer",
-    "social",
-    "society",
+    "soci",
     "population",
     "communit",
+    "people",
+    "minorit",
     "justice",
     "equit",
     "equality",
-    "fairness",
 ]
-keywords_additional = [
-    "distribution",
-    "representative",
-    "procedual",
-    "burden",
-    "poverty",
-    "fair",
-    "gender",
-    "recognition",
-    "cost",
-    "benefit",
-    "socio-economic",
-    "disadvantage",
-    "minority",
-    "income",
-    "acceptance",
-    "poor",
-]
+keywords_additional = []
 keywords = keywords_search_string + keywords_additional
 
 SEARCH_KEYS = "search-keys"

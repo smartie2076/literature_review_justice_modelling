@@ -194,7 +194,7 @@ def save_and_quit(data):
                     for i in range(0, 6)
                 ]
             )
-            == 6
+            == 5
             for id in data.index
         ]
         print(

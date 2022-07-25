@@ -80,12 +80,22 @@ def assess_titles(data):
 
 def assess_title_and_abstract(data):
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
-        print(
-            f"Number of assessed papers (estimate): {len(data.index)-data[inclusion_criteria_title_and_abstract[0]].isna().sum()}"
+        assessed_papers = (
+            len(data.index)
+            - data[inclusion_criteria_title_and_abstract[0]].isna().sum()
         )
         print(
-            f"Number of papers left to assess (estimate): {data[inclusion_criteria_title_and_abstract[0]].isna().sum() - (len(data.index) - data[inclusion_criteria_title[0]].sum())}\n"
+            f"Number of assessed papers (estimate): {assessed_papers} ({round(assessed_papers/(len(data.index))*100,2)} %)"
         )
+
+        left_to_assess_papers = data[
+            inclusion_criteria_title_and_abstract[0]
+        ].isna().sum() - (len(data.index) - data[inclusion_criteria_title[0]].sum())
+        print(
+            f"Number of papers left to assess (estimate): {left_to_assess_papers} ({round(left_to_assess_papers/(data[inclusion_criteria_title[0]].sum())*100,2)} %)\n"
+        )
+
+    return assessed_papers, left_to_assess_papers
 
 
 def bold_keys(string):
@@ -185,7 +195,7 @@ def save_and_quit(data):
     print(f"Saved outputs to {output_file}.")
     assess_titles(data)
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
-    assess_title_and_abstract(data)
+    assessed_papers, left_to_assess_papers = assess_title_and_abstract(data)
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
         data["Include"] = [
             sum(
@@ -201,9 +211,11 @@ def save_and_quit(data):
             f"Papers are relevant, if they fullfill the following inclusion criteria: "
             f"\n Does the title {inclusion_criteria_title[0]} And does the paper... {inclusion_criteria_title_and_abstract[0:5]}."
         )
-        print(f"Intermediate number of relevant papers: {sum(data['Include'])}")
         print(
-            f"Intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()}"
+            f"Intermediate number of relevant papers: {sum(data['Include'])} ({round(sum(data['Include'])/assessed_papers*100,2)} % of assessed papers)"
+        )
+        print(
+            f"Intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()} ({round(data[inclusion_criteria_title_and_abstract[6]].sum()/assessed_papers*100,2)} % of assessed papers)"
         )
     sys.exit()
 

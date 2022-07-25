@@ -67,14 +67,16 @@ KEYWORD_LIST += [key.capitalize() for key in KEYWORD_LIST]
 
 
 def assess_titles(data):
+    assessed_titles = len(data.index) - data[inclusion_criteria_title[0]].isna().sum()
     print(
-        f"Number of assessed titles: {len(data.index) - data[inclusion_criteria_title[0]].isna().sum()}"
+        f"Number of assessed titles: {assessed_titles} ({round(assessed_titles/len(data.index)*100,2)} % of titles)"
+    )
+    potentially_relevant_titles = data[inclusion_criteria_title[0]].sum()
+    print(
+        f"Number of potentially relevant titles: {potentially_relevant_titles} ({round(potentially_relevant_titles/assessed_titles*100,2)} % of assessed titles)"
     )
     print(
-        f"Number of potentially relevant titles: {data[inclusion_criteria_title[0]].sum()}"
-    )
-    print(
-        f"Number of titles left to assess: {data[inclusion_criteria_title[0]].isna().sum()}\n"
+        f"Number of titles left to assess: {data[inclusion_criteria_title[0]].isna().sum()} ({round(data[inclusion_criteria_title[0]].isna().sum()/len(data.index)*100,2)} % of titles)\n"
     )
 
 

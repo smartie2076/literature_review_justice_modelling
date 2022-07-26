@@ -112,9 +112,9 @@ def paper_author_year_title_abstract(data, paper_id, title, displayed_paper_info
     if displayed_paper_info is False:
 
         print(f"\n {data[AUTHORS][paper_id]} ({data[YEAR][paper_id]})\n")
-        print(f"{bold_keys(data[TITLE][paper_id])}\n")
+        print(f"{bold_keys(str(data[TITLE][paper_id]))}\n")
         if title is False:
-            print(f"{bold_keys(data[ABSTRACT][paper_id])}\n \n")
+            print(f"{bold_keys(str(data[ABSTRACT][paper_id]))}\n \n")
         print(intro)
         displayed_paper_info = True
 

@@ -110,8 +110,7 @@ def paper_author_year_title_abstract(data, paper_id, title, displayed_paper_info
     # Display paper info on screen
     if displayed_paper_info is False:
 
-        print(f"\n {data[AUTHORS][paper_id]}")
-        print(f"{data[YEAR][paper_id]}\n")
+        print(f"\n {data[AUTHORS][paper_id]} ({data[YEAR][paper_id]})\n")
         print(f"{bold_keys(data[TITLE][paper_id])}\n")
         if title is False:
             print(f"{bold_keys(data[ABSTRACT][paper_id])}\n \n")
@@ -177,7 +176,7 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
             elif vote in ["p", "pass", "Pass"]:
                 vote = None
                 skip = 2
-            elif vote in ["Exit", "Quit","exit", "quit", "x", "q"]:
+            elif vote in ["Exit", "Quit", "exit", "quit", "x", "q"]:
                 save_and_quit(data)
             else:
                 print(
@@ -189,6 +188,8 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
 
         # Save vote to data frame
         data.loc[paper_id, inclusion_criteria[i]] = vote
+
+    return displayed_paper_info
 
 
 def save_and_quit(data):
@@ -249,7 +250,10 @@ def evaluate_title_and_abstract():
             data, paper_id=i, inclusion_criteria=inclusion_criteria_title, title=True
         )
 
+    count = 0
     for i in data.index:
+        # If you want to skip to the less-relevant paper abstracts:
+        # i += 1300
         # Boolean values stored as np.bool_
         try:
             value = bool(data.loc[i, inclusion_criteria_title[0]])
@@ -262,11 +266,17 @@ def evaluate_title_and_abstract():
         # Only assess entry if title fullfills inclusion criteria for the title
         if value is True or value is None:
             # Assess the inclusion criteria for the abstract and title together
-            get_vote_on_paper(
+            displayed_paper_info = get_vote_on_paper(
                 data,
                 paper_id=i,
                 inclusion_criteria=inclusion_criteria_title_and_abstract,
             )
+            if displayed_paper_info is True:
+                count += 1
+
+        if count == 10:
+            print(f"\n \033[93m You reviewed 10 papers. Well done! \033[0m")
+            count = 0
 
     # Save and quit when program end is reached:
     save_and_quit(data)

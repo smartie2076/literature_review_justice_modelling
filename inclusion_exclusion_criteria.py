@@ -168,20 +168,20 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
         # Ask one time for a correct entry, if the input was invalid, but add "vote=None" if the input was invalid twice
         while skip < 2:
             vote = input(inclusion_criteria[i])
-            if vote in ["y", "yes", "j", "ja", "1", "TRUE", "true"]:
+            if vote in ["y", "yes", "Yes", "j", "ja", "1", "TRUE", "true"]:
                 vote = True
                 skip = 2
-            elif vote in ["n", "no", "0", "FALSE", "false"]:
+            elif vote in ["n", "no", "No", "0", "FALSE", "false"]:
                 vote = False
                 skip = 2
-            elif vote in ["p", "pass"]:
+            elif vote in ["p", "pass", "Pass"]:
                 vote = None
                 skip = 2
-            elif vote in ["exit", "quit", "x", "q"]:
+            elif vote in ["Exit", "Quit","exit", "quit", "x", "q"]:
                 save_and_quit(data)
             else:
                 print(
-                    f"Wrong input. Please use y/yes/j/ja/1/TRUE/true or n/no/0/FALSE/false or p/pass or exit/quit/x. If you use an invalid key again, you will skip automatically"
+                    f"Wrong input. Please use y/yes/Yes/j/ja/1/TRUE/true or n/no/No/0/FALSE/false or p/pass/Pass or Exit/exit/Quit/quit/x. If you use an invalid key again, you will skip automatically"
                 )
                 skip += 1
                 if skip == 2:

@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 import sys
+import matplotlib.pyplot as plt
 
 intro = "Is the paper"
 inclusion_criteria_title = ["implying a relation with energy issues?"]
@@ -210,6 +211,29 @@ def save_and_quit(data):
             == 5
             for id in data.index
         ]
+
+        plot_data = pd.DataFrame(
+            {
+                "Include": data["Include"].values.astype(float),
+                "Paper ID": data.index.tolist(),
+            }
+        )
+
+        # Get likelihood of a paper to be selected as relevant in a bin
+        bins = 25
+        plot_data = plot_data.rolling(bins).mean()
+        plot_data = plot_data.iloc[::bins, :]
+        # Plot likelihood - ideally this likelyhood decreases with the Paper ID
+        # As this would indicate that my relevance ranking is working correctly
+        plot_data.plot.scatter(
+            x="Paper ID",
+            y="Include",
+            title=f"Relevance likelihood depending on Paper ID \n (bins of {bins}, assessed papers: {assessed_papers})",
+            xlabel="Paper ID, ranked by relevance with own algorithm",
+            ylabel=f"Relevance likelihood",
+        )
+        plt.savefig("./likelihood_of_relevance.png")
+
         print(
             f"Papers are relevant, if they fullfill the following inclusion criteria: "
             f"\n Does the title {inclusion_criteria_title[0]} And does the paper... {inclusion_criteria_title_and_abstract[0:5]}."

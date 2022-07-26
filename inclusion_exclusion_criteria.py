@@ -299,7 +299,7 @@ def evaluate_title_and_abstract():
                 count += 1
 
         if count == 10:
-            print(f"\n \033[93m You reviewed 10 papers. Well done! \033[0m")
+            print(f"\n \033[93m You reviewed 10 papers. Well done! Better save and restart now! \033[0m")
             count = 0
 
     # Save and quit when program end is reached:

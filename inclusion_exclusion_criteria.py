@@ -211,10 +211,16 @@ def save_and_quit(data):
             == 5
             for id in data.index
         ]
+        relevant_papers = data["Include"].sum()
 
         plot_data = pd.DataFrame(
             {
-                "Include": data["Include"].values.astype(float),
+                "All inclusion criteria fullfilled": data["Include"].values.astype(
+                    float
+                ),
+                "Energy relation of title": data[
+                    inclusion_criteria_title[0]
+                ].values.astype(float),
                 "Paper ID": data.index.tolist(),
             }
         )
@@ -225,12 +231,13 @@ def save_and_quit(data):
         plot_data = plot_data.iloc[::bins, :]
         # Plot likelihood - ideally this likelyhood decreases with the Paper ID
         # As this would indicate that my relevance ranking is working correctly
-        plot_data.plot.scatter(
+        plot_data.plot(
             x="Paper ID",
-            y="Include",
-            title=f"Relevance likelihood depending on Paper ID \n (bins of {bins}, assessed papers: {assessed_papers})",
+            y=["All inclusion criteria fullfilled", "Energy relation of title"],
+            title=f"Relevance likelihood depending on Paper ID \n (bins of {bins}, assessed: {assessed_papers}, relevant: {relevant_papers})",
             xlabel="Paper ID, ranked by relevance with own algorithm",
             ylabel=f"Relevance likelihood",
+            style=["o", "o"],
         )
         plt.savefig("./likelihood_of_relevance.png")
 
@@ -277,7 +284,7 @@ def evaluate_title_and_abstract():
     count = 0
     for i in data.index:
         # If you want to skip to the less-relevant paper abstracts:
-        # i += 1300
+        # i += 1700
         # Boolean values stored as np.bool_
         try:
             value = bool(data.loc[i, inclusion_criteria_title[0]])
@@ -299,7 +306,9 @@ def evaluate_title_and_abstract():
                 count += 1
 
         if count == 10:
-            print(f"\n \033[93m You reviewed 10 papers. Well done! Better save and restart now! \033[0m")
+            print(
+                f"\n \033[93m You reviewed 10 papers. Well done! Better save and restart now! \033[0m"
+            )
             count = 0
 
     # Save and quit when program end is reached:

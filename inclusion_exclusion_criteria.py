@@ -88,7 +88,7 @@ def assess_title_and_abstract(data):
             - data[inclusion_criteria_title_and_abstract[0]].isna().sum()
         )
         print(
-            f"Number of assessed papers (estimate): {assessed_papers} ({round(assessed_papers/(len(data.index))*100,2)} %)"
+            f"Number of assessed papers (estimate): {assessed_papers} ({round(assessed_papers/(data[inclusion_criteria_title[0]].sum())*100,2)} %)"
         )
 
         left_to_assess_papers = data[

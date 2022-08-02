@@ -10,8 +10,8 @@ inclusion_criteria_title = ["implying a relation with energy issues?"]
 inclusion_criteria_title_and_abstract = [
     "dealing with energy supply?",
     "highlighting the relevance of justice in planning?",
-    "investigating the impact of policies on consumers?",
-    "offer a structurized approach via eg a model or framework?",
+    "investigating the impact of policies on consumer justice?",
+    "offer a structurized approach to justice via eg a model or framework?",
     "clearly stating at least one justice indicator? (including fuzzy logic)",
     "hinting at at least one relevant justice indicator? (only True if no explicit mention)",
     "otherwise relevant for the paper? (only True if otherwise not included)",
@@ -111,7 +111,7 @@ def paper_author_year_title_abstract(data, paper_id, title, displayed_paper_info
     # Display paper info on screen
     if displayed_paper_info is False:
 
-        print(f"\n {data[AUTHORS][paper_id]} ({data[YEAR][paper_id]})\n")
+        print(f"\n {paper_id}. {data[AUTHORS][paper_id]} ({data[YEAR][paper_id]})\n")
         print(f"{bold_keys(str(data[TITLE][paper_id]))}\n")
         if title is False:
             print(f"{bold_keys(str(data[ABSTRACT][paper_id]))}\n \n")
@@ -196,7 +196,7 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
 def save_and_quit(data):
     # In case of manual termination or end of data
     data.to_csv(output_file)
-    print(f"Saved outputs to {output_file}.")
+    print(f"Saved outputs to {output_file}.\n")
     assess_titles(data)
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
     assessed_papers, left_to_assess_papers = assess_title_and_abstract(data)
@@ -211,6 +211,10 @@ def save_and_quit(data):
             == 5
             for id in data.index
         ]
+        data[data["Include"] == True].to_csv(output_file[:-4] + "-only-included.csv")
+        print(
+            f"Saved list of relevant papers (inclusion criteria only) to {output_file[:-4]}-only-included.csv. \n"
+        )
         relevant_papers = data["Include"].sum()
 
         plot_data = pd.DataFrame(

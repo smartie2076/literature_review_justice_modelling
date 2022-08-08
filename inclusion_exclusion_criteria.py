@@ -233,6 +233,7 @@ def save_and_quit(data):
         bins = 25
         plot_data = plot_data.rolling(bins).mean()
         plot_data = plot_data.iloc[::bins, :]
+
         # Plot likelihood - ideally this likelyhood decreases with the Paper ID
         # As this would indicate that my relevance ranking is working correctly
         plot_data.plot(
@@ -243,6 +244,8 @@ def save_and_quit(data):
             ylabel=f"Relevance likelihood",
             style=["o", "o"],
         )
+
+        plot_data.to_csv("./data_likelihood_of_relevance.csv")
         plt.savefig("./likelihood_of_relevance.png")
 
         print(
@@ -255,6 +258,7 @@ def save_and_quit(data):
         print(
             f"Intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()} ({round(data[inclusion_criteria_title_and_abstract[6]].sum()/assessed_papers*100,2)} % of assessed papers)"
         )
+
     sys.exit()
 
 

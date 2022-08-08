@@ -211,9 +211,15 @@ def save_and_quit(data):
             == 5
             for id in data.index
         ]
+        # Add papers that are included due to exceptional vote
+        other_criterion = [
+            data.loc[id, inclusion_criteria_title_and_abstract[7]] == True
+            for id in range(0, len(data.index))
+        ]
+        data["Include"] += other_criterion
         data[data["Include"] == True].to_csv(output_file[:-4] + "-only-included.csv")
         print(
-            f"Saved list of relevant papers (inclusion criteria only) to {output_file[:-4]}-only-included.csv. \n"
+            f"Saved list of relevant papers to {output_file[:-4]}-only-included.csv. \n"
         )
         relevant_papers = data["Include"].sum()
 
@@ -256,7 +262,7 @@ def save_and_quit(data):
             f"Intermediate number of relevant papers: {sum(data['Include'])} ({round(sum(data['Include'])/assessed_papers*100,2)} % of assessed papers)"
         )
         print(
-            f"Intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()} ({round(data[inclusion_criteria_title_and_abstract[6]].sum()/assessed_papers*100,2)} % of assessed papers)"
+            f"Within those, intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()} ({round(data[inclusion_criteria_title_and_abstract[6]].sum()/assessed_papers*100,2)} % of assessed papers)"
         )
 
     sys.exit()

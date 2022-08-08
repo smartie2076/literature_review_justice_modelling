@@ -262,7 +262,7 @@ def save_and_quit(data):
             ],
             title=f"Relevance likelihood depending on Paper ID \n (bins of {bins}, assessed: {assessed_papers}, relevant: {relevant_papers})",
             xlabel="Paper ID, ranked by relevance with own algorithm",
-            ylabel=f"Relevance likelihood",
+            ylabel=f"Percentage of papers",
             style=["o", "o", "-"],
         )
 

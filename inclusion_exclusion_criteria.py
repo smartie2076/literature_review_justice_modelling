@@ -283,6 +283,23 @@ def save_and_quit(data):
     sys.exit()
 
 
+def check_duplicates(data):
+    print("\n Checking for duplicates based on DOI or Title independently:")
+    duplicated = data["DOI"].duplicated() + data[TITLE].duplicated()
+    duplicated = duplicated[duplicated == True]
+    number_of_potential_duplicates = 0
+    for item in duplicated.index:
+        if isinstance(data.loc[item, "DOI"], str):
+            print(
+                f"Possible duplicate: {data.loc[item, AUTHORS]} with DOI {data.loc[item,'DOI']}"
+            )
+            number_of_potential_duplicates += 1
+
+    print(
+        f"It is possible that there are {number_of_potential_duplicates} duplicates in the input file. \n"
+    )
+
+
 def evaluate_title_and_abstract():
     data = pd.read_csv(file)
     print(f"Original number of literature to assess: {len(data.index)}")
@@ -299,6 +316,7 @@ def evaluate_title_and_abstract():
     )
 
     try:
+        check_duplicates(data)
         assess_titles(data)
         assess_title_and_abstract(data)
     except:

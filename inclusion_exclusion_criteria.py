@@ -223,6 +223,16 @@ def save_and_quit(data):
         )
         relevant_papers = data["Include"].sum()
 
+        # All titles that were discharged are assessed
+        data["Assessed"] = ~data[inclusion_criteria_title]
+
+        # All titles+abstracts that were assessed dont have any "NaN" left in the inclusion criteria columns
+        overall_vote = data[inclusion_criteria_title_and_abstract].dropna()
+        overall_vote["Assessed"] = True
+        data["Assessed"] += overall_vote["Assessed"].reindex(
+            data.index, fill_value=False
+        )
+
         plot_data = pd.DataFrame(
             {
                 "All inclusion criteria fullfilled": data["Include"].values.astype(
@@ -232,6 +242,7 @@ def save_and_quit(data):
                     inclusion_criteria_title[0]
                 ].values.astype(float),
                 "Paper ID": data.index.tolist(),
+                "Finished assessment": data["Assessed"],
             }
         )
 
@@ -244,11 +255,15 @@ def save_and_quit(data):
         # As this would indicate that my relevance ranking is working correctly
         plot_data.plot(
             x="Paper ID",
-            y=["All inclusion criteria fullfilled", "Energy relation of title"],
+            y=[
+                "All inclusion criteria fullfilled",
+                "Energy relation of title",
+                "Finished assessment",
+            ],
             title=f"Relevance likelihood depending on Paper ID \n (bins of {bins}, assessed: {assessed_papers}, relevant: {relevant_papers})",
             xlabel="Paper ID, ranked by relevance with own algorithm",
             ylabel=f"Relevance likelihood",
-            style=["o", "o"],
+            style=["o", "o", "-"],
         )
 
         plot_data.to_csv("./data_likelihood_of_relevance.csv")

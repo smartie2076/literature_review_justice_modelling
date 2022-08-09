@@ -331,7 +331,9 @@ def evaluate_title_and_abstract():
     count = 0
     for i in data.index:
         # If you want to skip to the less-relevant paper abstracts:
-        # i += 1700
+        #i += 1500
+        if i > len(data.index) - 1:
+            save_and_quit(data)
         # Boolean values stored as np.bool_
         try:
             value = bool(data.loc[i, inclusion_criteria_title[0]])

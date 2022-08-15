@@ -213,7 +213,7 @@ def save_and_quit(data):
         ]
         # Add papers that are included due to exceptional vote
         other_criterion = [
-            data.loc[id, inclusion_criteria_title_and_abstract[7]] == True
+            data.loc[id, inclusion_criteria_title_and_abstract[6]] == True
             for id in range(0, len(data.index))
         ]
         data["Include"] += other_criterion
@@ -232,6 +232,10 @@ def save_and_quit(data):
         data["Assessed"] += overall_vote["Assessed"].reindex(
             data.index, fill_value=False
         )
+        #data.to_csv(output_file)
+        #print(
+        #    f"Saved outputs to {output_file}, including column 'Include'  und 'Assessed'.\n"
+        #)
 
         plot_data = pd.DataFrame(
             {
@@ -331,7 +335,8 @@ def evaluate_title_and_abstract():
     count = 0
     for i in data.index:
         # If you want to skip to the less-relevant paper abstracts:
-        #i += 1500
+        #i += 1000
+        # Makey sure that i does not increase over actual number of papers when skipping to higher numbers
         if i > len(data.index) - 1:
             save_and_quit(data)
         # Boolean values stored as np.bool_

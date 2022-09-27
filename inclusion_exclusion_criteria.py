@@ -423,7 +423,6 @@ def evaluate_title_and_abstract(
                 inclusion_criteria_title,
                 inclusion_criteria_title_and_abstract,
                 number_of_inclusion_criteria,
-                target_value_of_inclusion_criteria,
                 list_index_positive_vote,
             )
         # Boolean values stored as np.bool_
@@ -466,7 +465,6 @@ def evaluate_title_and_abstract(
         inclusion_criteria_title,
         inclusion_criteria_title_and_abstract,
         number_of_inclusion_criteria,
-        target_value_of_inclusion_criteria,
         list_index_positive_vote,
     )
 

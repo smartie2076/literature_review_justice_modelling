@@ -5,24 +5,6 @@ import sys
 import matplotlib.pyplot as plt
 
 intro = "Is the paper"
-inclusion_criteria_title = ["implying a relation with energy issues?"]
-
-inclusion_criteria_title_and_abstract = [
-    "dealing with energy supply?",
-    "highlighting the relevance of justice in planning?",
-    "investigating the impact of policies on consumer justice?",
-    "offer a structurized approach to justice via eg a model or framework?",
-    "clearly stating at least one justice indicator? (including fuzzy logic)",
-    "hinting at at least one relevant justice indicator? (only True if no explicit mention)",
-    "otherwise relevant for the paper? (only True if otherwise not included)",
-    "otherwise relevant for my PhD?",
-    "otherwise relevant for people I know?",
-]
-
-exclusion = [""]
-
-file = "2022-07-19-Final-Keywords-Publications-merged-Count.csv"
-output_file = file[:-4] + "-votes.csv"
 
 AUTHORS = "Authors"
 YEAR = "Publication Year"
@@ -67,7 +49,7 @@ KEYWORD_LIST = [
 KEYWORD_LIST += [key.capitalize() for key in KEYWORD_LIST]
 
 
-def assess_titles(data):
+def assess_titles(data, inclusion_criteria_title):
     assessed_titles = len(data.index) - data[inclusion_criteria_title[0]].isna().sum()
     print(
         f"Number of assessed titles: {assessed_titles} ({round(assessed_titles/len(data.index)*100,2)} % of titles)"
@@ -81,7 +63,9 @@ def assess_titles(data):
     )
 
 
-def assess_title_and_abstract(data):
+def assess_title_and_abstract(
+    data, inclusion_criteria_title, inclusion_criteria_title_and_abstract
+):
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
         assessed_papers = (
             len(data.index)
@@ -121,20 +105,41 @@ def paper_author_year_title_abstract(data, paper_id, title, displayed_paper_info
     return displayed_paper_info
 
 
-def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
+def get_vote_on_paper(
+    data,
+    paper_id,
+    output_file,
+    primarily_assessed_inclusion_criteria,
+    inclusion_criteria_title,
+    inclusion_criteria_title_and_abstract,
+    number_of_inclusion_criteria,
+    target_value_of_inclusion_criteria,
+dict_options_inclusion_criteria_title_and_abstract,
+    list_index_positive_vote,
+    title=False,
+):
     displayed_paper_info = False
-    for i in range(0, len(inclusion_criteria)):
+    for i in range(0, len(primarily_assessed_inclusion_criteria)):
         skip = 0
         try:
             if (
-                isinstance(data.loc[paper_id, inclusion_criteria[i]], np.bool_) is True
-                or isinstance(data.loc[paper_id, inclusion_criteria[i]], bool) is True
+                isinstance(
+                    data.loc[paper_id, primarily_assessed_inclusion_criteria[i]],
+                    np.bool_,
+                )
+                is True
+                or isinstance(
+                    data.loc[paper_id, primarily_assessed_inclusion_criteria[i]], bool
+                )
+                is True
             ):
                 # Entries are read as np.bool_, and those do not pass the test here
-                value = bool(data.loc[paper_id, inclusion_criteria[i]])
+                value = bool(
+                    data.loc[paper_id, primarily_assessed_inclusion_criteria[i]]
+                )
                 # Check if the old file already included a vote on the inclusion criteria
                 if value is True or value is False:
-                    vote = data.loc[paper_id, inclusion_criteria[i]]
+                    vote = data.loc[paper_id, primarily_assessed_inclusion_criteria[i]]
                     skip = 2
                 # If keywords from group energy services, pass title as relevant
                 elif (title is True) and (
@@ -167,53 +172,106 @@ def get_vote_on_paper(data, paper_id, inclusion_criteria, title=False):
         # Valid inputs: Affirmative, Negative, Pass, Exit (premature script exit)
         # Ask one time for a correct entry, if the input was invalid, but add "vote=None" if the input was invalid twice
         while skip < 2:
-            vote = input(inclusion_criteria[i])
-            if vote in ["y", "yes", "Yes", "j", "ja", "1", "TRUE", "true"]:
+            vote = input(primarily_assessed_inclusion_criteria[i])
+            valid_values = dict_options_inclusion_criteria_title_and_abstract[
+                primarily_assessed_inclusion_criteria[i]
+            ]
+            if True in valid_values and vote in [
+                "y",
+                "yes",
+                "Yes",
+                "j",
+                "ja",
+                "1",
+                "TRUE",
+                "true",
+                "True",
+            ]:
                 vote = True
                 skip = 2
-            elif vote in ["n", "no", "No", "0", "FALSE", "false"]:
+            elif False in valid_values and vote in [
+                "n",
+                "no",
+                "No",
+                "0",
+                "FALSE",
+                "false",
+                "False",
+            ]:
                 vote = False
+                skip = 2
+            elif isinstance(vote, int) in int(vote) in valid_values:
+                vote = int(vote)
                 skip = 2
             elif vote in ["p", "pass", "Pass"]:
                 vote = None
                 skip = 2
             elif vote in ["Exit", "Quit", "exit", "quit", "x", "q"]:
-                save_and_quit(data)
-            else:
-                print(
-                    f"Wrong input. Please use y/yes/Yes/j/ja/1/TRUE/true or n/no/No/0/FALSE/false or p/pass/Pass or Exit/exit/Quit/quit/x. If you use an invalid key again, you will skip automatically"
+                save_and_quit(
+                    output_file,
+                    data,
+                    inclusion_criteria_title,
+                    inclusion_criteria_title_and_abstract,
+                    number_of_inclusion_criteria,
+                    target_value_of_inclusion_criteria,
+                    list_index_positive_vote,
                 )
+            else:
+                wrong_value_message = f"Wrong input. Valid values are: {valid_values}. "
+                if True in valid_values:
+                    wrong_value_message += (
+                        "You may use y/yes/Yes/j/ja/1/TRUE/true/True for True. "
+                    )
+                if False in valid_values:
+                    wrong_value_message += (
+                        "You may use n/no/No/0/FALSE/false/False for False. "
+                    )
+                wrong_value_message += "To skip the question use p/pass/Pass and to terminate the script, use Exit/exit/Quit/quit/x. If you use an invalid key again, you will skip automatically."
+                print(wrong_value_message)
                 skip += 1
                 if skip == 2:
                     vote = None
 
         # Save vote to data frame
-        data.loc[paper_id, inclusion_criteria[i]] = vote
+        data.loc[paper_id, primarily_assessed_inclusion_criteria[i]] = vote
 
     return displayed_paper_info
 
 
-def save_and_quit(data):
+def save_and_quit(
+    output_file,
+    data,
+    inclusion_criteria_title,
+    inclusion_criteria_title_and_abstract,
+    number_of_inclusion_criteria,
+    target_value_of_inclusion_criteria,
+    list_index_positive_vote,
+):
     # In case of manual termination or end of data
     data.to_csv(output_file)
     print(f"Saved outputs to {output_file}.\n")
-    assess_titles(data)
+    assess_titles(data, inclusion_criteria_title)
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
-    assessed_papers, left_to_assess_papers = assess_title_and_abstract(data)
+    assessed_papers, left_to_assess_papers = assess_title_and_abstract(
+        data, inclusion_criteria_title, inclusion_criteria_title_and_abstract
+    )
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
         data["Include"] = [
             sum(
                 [
                     data.loc[id, inclusion_criteria_title_and_abstract[i]]
-                    for i in range(0, 6)
+                    for i in range(0, number_of_inclusion_criteria + 1)
                 ]
             )
-            == 5
+            == target_value_of_inclusion_criteria
             for id in data.index
         ]
         # Add papers that are included due to exceptional vote
         other_criterion = [
-            data.loc[id, inclusion_criteria_title_and_abstract[6]] == True
+            data.loc[
+                id, inclusion_criteria_title_and_abstract[list_index_positive_vote]
+            ]
+            == True
             for id in range(0, len(data.index))
         ]
         data["Include"] += other_criterion
@@ -232,10 +290,10 @@ def save_and_quit(data):
         data["Assessed"] += overall_vote["Assessed"].reindex(
             data.index, fill_value=False
         )
-        #data.to_csv(output_file)
-        #print(
+        # data.to_csv(output_file)
+        # print(
         #    f"Saved outputs to {output_file}, including column 'Include'  und 'Assessed'.\n"
-        #)
+        # )
 
         plot_data = pd.DataFrame(
             {
@@ -275,7 +333,7 @@ def save_and_quit(data):
 
         print(
             f"Papers are relevant, if they fullfill the following inclusion criteria: "
-            f"\n Does the title {inclusion_criteria_title[0]} And does the paper... {inclusion_criteria_title_and_abstract[0:5]}."
+            f"\n Does the title {inclusion_criteria_title[0]}, And does the paper... {inclusion_criteria_title_and_abstract[0:number_of_inclusion_criteria]} (or is included exceptionally as it is {inclusion_criteria_title_and_abstract[list_index_positive_vote]})."
         )
         print(
             f"Intermediate number of relevant papers: {sum(data['Include'])} ({round(sum(data['Include'])/assessed_papers*100,2)} % of assessed papers)"
@@ -304,7 +362,16 @@ def check_duplicates(data):
     )
 
 
-def evaluate_title_and_abstract():
+def evaluate_title_and_abstract(
+    file,
+    output_file,
+    inclusion_criteria_title,
+    inclusion_criteria_title_and_abstract,
+    dict_options_inclusion_criteria_title_and_abstract,
+    number_of_inclusion_criteria,
+    target_value_of_inclusion_criteria,
+    list_index_positive_vote,
+):
     data = pd.read_csv(file)
     print(f"Original number of literature to assess: {len(data.index)}")
     data_with_votes = pd.read_csv(output_file)
@@ -321,24 +388,44 @@ def evaluate_title_and_abstract():
 
     try:
         check_duplicates(data)
-        assess_titles(data)
-        assess_title_and_abstract(data)
+        assess_titles(data, inclusion_criteria_title)
+        assess_title_and_abstract(
+            data, inclusion_criteria_title, inclusion_criteria_title_and_abstract
+        )
     except:
         pass
 
     for i in data.index:
         # Get vote on the paper title first
         get_vote_on_paper(
-            data, paper_id=i, inclusion_criteria=inclusion_criteria_title, title=True
+            data,
+            paper_id=i,
+            output_file=output_file,
+            primarily_assessed_inclusion_criteria=inclusion_criteria_title,
+            inclusion_criteria_title=inclusion_criteria_title,
+            inclusion_criteria_title_and_abstract=inclusion_criteria_title_and_abstract,
+            number_of_inclusion_criteria=number_of_inclusion_criteria,
+            target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
+            dict_options_inclusion_criteria_title_and_abstract=dict_options_inclusion_criteria_title_and_abstract,
+            list_index_positive_vote=list_index_positive_vote,
+            title=True,
         )
 
     count = 0
     for i in data.index:
         # If you want to skip to the less-relevant paper abstracts:
-        #i += 1000
+        # i += 1000
         # Makey sure that i does not increase over actual number of papers when skipping to higher numbers
         if i > len(data.index) - 1:
-            save_and_quit(data)
+            save_and_quit(
+                output_file,
+                data,
+                inclusion_criteria_title,
+                inclusion_criteria_title_and_abstract,
+                number_of_inclusion_criteria,
+                target_value_of_inclusion_criteria,
+                list_index_positive_vote,
+            )
         # Boolean values stored as np.bool_
         try:
             value = bool(data.loc[i, inclusion_criteria_title[0]])
@@ -354,7 +441,14 @@ def evaluate_title_and_abstract():
             displayed_paper_info = get_vote_on_paper(
                 data,
                 paper_id=i,
-                inclusion_criteria=inclusion_criteria_title_and_abstract,
+                output_file=output_file,
+                primarily_assessed_inclusion_criteria=inclusion_criteria_title_and_abstract,
+                inclusion_criteria_title=inclusion_criteria_title,
+                inclusion_criteria_title_and_abstract=inclusion_criteria_title_and_abstract,
+                number_of_inclusion_criteria=number_of_inclusion_criteria,
+                target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
+                list_index_positive_vote=list_index_positive_vote,
+                dict_options_inclusion_criteria_title_and_abstract=dict_options_inclusion_criteria_title_and_abstract,
             )
             if displayed_paper_info is True:
                 count += 1
@@ -366,7 +460,16 @@ def evaluate_title_and_abstract():
             count = 0
 
     # Save and quit when program end is reached:
-    save_and_quit(data)
+    save_and_quit(
+        output_file,
+        data,
+        inclusion_criteria_title,
+        inclusion_criteria_title_and_abstract,
+        number_of_inclusion_criteria,
+        target_value_of_inclusion_criteria,
+        list_index_positive_vote,
+    )
 
 
-evaluate_title_and_abstract()
+if __name__ == "__main__":
+    main()

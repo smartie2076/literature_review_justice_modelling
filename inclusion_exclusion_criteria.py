@@ -83,7 +83,9 @@ def assess_title_and_abstract(
         )
     else:
         assessed_papers = 0
-        left_to_assess_papers = (len(data.index) - data[inclusion_criteria_title[0]].sum())
+        left_to_assess_papers = (
+            len(data.index) - data[inclusion_criteria_title[0]].sum()
+        )
 
     return assessed_papers, left_to_assess_papers
 
@@ -117,7 +119,7 @@ def get_vote_on_paper(
     inclusion_criteria_title_and_abstract,
     number_of_inclusion_criteria,
     target_value_of_inclusion_criteria,
-dict_options_inclusion_criteria_title_and_abstract,
+    dict_options_inclusion_criteria_title_and_abstract,
     list_index_positive_vote,
     title=False,
 ):
@@ -212,15 +214,22 @@ dict_options_inclusion_criteria_title_and_abstract,
                     data,
                     inclusion_criteria_title,
                     inclusion_criteria_title_and_abstract,
+                    dict_options_inclusion_criteria_title_and_abstract,
                     number_of_inclusion_criteria,
                     target_value_of_inclusion_criteria,
                     list_index_positive_vote,
                 )
-            elif any([isinstance(valid_values[x], int) for x in valid_values]) and vote.isdigit() and int(vote) in valid_values:
+            elif (
+                any([isinstance(x, int) for x in valid_values])
+                and vote.isdigit()
+                and int(vote) in valid_values
+            ):
                 vote = int(vote)
                 skip = 2
             else:
-                wrong_value_message = f"Wrong input {vote}. Valid values are: {valid_values}. "
+                wrong_value_message = (
+                    f"Wrong input {vote}. Valid values are: {valid_values}. "
+                )
                 if True in valid_values:
                     wrong_value_message += (
                         "You may use y/yes/Yes/j/ja/t/TRUE/true/True for True. "
@@ -246,6 +255,7 @@ def save_and_quit(
     data,
     inclusion_criteria_title,
     inclusion_criteria_title_and_abstract,
+    dict_options_inclusion_criteria_title_and_abstract,
     number_of_inclusion_criteria,
     target_value_of_inclusion_criteria,
     list_index_positive_vote,
@@ -255,21 +265,51 @@ def save_and_quit(
     print(f"Saved outputs to {output_file}.\n")
     assess_titles(data, inclusion_criteria_title)
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
-    print(data.columns)
     assessed_papers, left_to_assess_papers = assess_title_and_abstract(
         data, inclusion_criteria_title, inclusion_criteria_title_and_abstract
     )
     if all([key in data.columns for key in inclusion_criteria_title_and_abstract]):
-        data["Include"] = [
+        # Include based on True/False criteria and overall target points
+        criterium_target_value = [
             sum(
                 [
                     data.loc[id, inclusion_criteria_title_and_abstract[i]]
-                    for i in range(0, number_of_inclusion_criteria + 1)
+                    for i in range(0, number_of_inclusion_criteria)
                 ]
             )
-            == target_value_of_inclusion_criteria
+            >= target_value_of_inclusion_criteria
             for id in data.index
         ]
+
+        data["Include"] = criterium_target_value
+
+        # Include based on max vote ("exceptional" performance for one of the criteria)
+        for criteria in inclusion_criteria_title_and_abstract[
+            0:number_of_inclusion_criteria
+        ]:
+            if (
+                dict_options_inclusion_criteria_title_and_abstract[criteria]
+                != [True, False]
+                and dict_options_inclusion_criteria_title_and_abstract[criteria]
+                != [False, True]
+            ) and any(
+                [
+                    isinstance(x, int)
+                    for x in dict_options_inclusion_criteria_title_and_abstract[
+                        criteria
+                    ]
+                ]
+            ):
+                # Maximum reachable points
+                maximum = max(
+                    dict_options_inclusion_criteria_title_and_abstract[criteria]
+                )
+                criterium_maximum = [
+                    data.loc[id, criteria] == maximum for id in data.index
+                ]
+
+                data["Include"] += criterium_maximum
+
         # Add papers that are included due to exceptional vote
         other_criterion = [
             data.loc[
@@ -278,7 +318,10 @@ def save_and_quit(
             == True
             for id in range(0, len(data.index))
         ]
+
         data["Include"] += other_criterion
+
+        # Only write included papers to file (as we have a boolean column, adding True+True does not result in 2)
         data[data["Include"] == True].to_csv(output_file[:-4] + "-only-included.csv")
         print(
             f"Saved list of relevant papers to {output_file[:-4]}-only-included.csv. \n"
@@ -426,6 +469,7 @@ def evaluate_title_and_abstract(
                 data,
                 inclusion_criteria_title,
                 inclusion_criteria_title_and_abstract,
+                dict_options_inclusion_criteria_title_and_abstract,
                 number_of_inclusion_criteria,
                 list_index_positive_vote,
             )
@@ -468,6 +512,7 @@ def evaluate_title_and_abstract(
         data,
         inclusion_criteria_title,
         inclusion_criteria_title_and_abstract,
+        dict_options_inclusion_criteria_title_and_abstract,
         number_of_inclusion_criteria,
         target_value_of_inclusion_criteria,
         list_index_positive_vote,

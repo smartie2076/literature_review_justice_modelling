@@ -375,8 +375,8 @@ def save_and_quit(
             style=["o", "o", "-"],
         )
 
-        plot_data.to_csv("./data_likelihood_of_relevance.csv")
-        plt.savefig("./likelihood_of_relevance.png")
+        plot_data.to_csv(output_file[:-4] + "_data_likelihood_of_relevance.csv")
+        plt.savefig(output_file[:-4] + "_likelihood_of_relevance.png")
 
         print(
             f"Papers are relevant, if they fullfill the following inclusion criteria: "

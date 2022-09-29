@@ -184,7 +184,8 @@ dict_options_inclusion_criteria_title_and_abstract,
                 "yes",
                 "Yes",
                 "j",
-                "ja"
+                "ja",
+                "t",
                 "TRUE",
                 "true",
                 "True",
@@ -195,6 +196,7 @@ dict_options_inclusion_criteria_title_and_abstract,
                 "n",
                 "no",
                 "No",
+                "f",
                 "FALSE",
                 "false",
                 "False",
@@ -221,11 +223,11 @@ dict_options_inclusion_criteria_title_and_abstract,
                 wrong_value_message = f"Wrong input {vote}. Valid values are: {valid_values}. "
                 if True in valid_values:
                     wrong_value_message += (
-                        "You may use y/yes/Yes/j/ja/TRUE/true/True for True. "
+                        "You may use y/yes/Yes/j/ja/t/TRUE/true/True for True. "
                     )
                 if False in valid_values:
                     wrong_value_message += (
-                        "You may use n/no/No/FALSE/false/False for False. "
+                        "You may use n/no/No/f/FALSE/false/False for False. "
                     )
                 wrong_value_message += "To skip the question use p/pass/Pass and to terminate the script, use Exit/exit/Quit/quit/x. If you use an invalid key again, you will skip automatically."
                 print(wrong_value_message)

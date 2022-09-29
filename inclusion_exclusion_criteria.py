@@ -81,6 +81,9 @@ def assess_title_and_abstract(
         print(
             f"Number of papers left to assess (estimate): {left_to_assess_papers} ({round(left_to_assess_papers/(data[inclusion_criteria_title[0]].sum())*100,2)} %)\n"
         )
+    else:
+        assessed_papers = 0
+        left_to_assess_papers = (len(data.index) - data[inclusion_criteria_title[0]].sum())
 
     return assessed_papers, left_to_assess_papers
 
@@ -181,8 +184,7 @@ dict_options_inclusion_criteria_title_and_abstract,
                 "yes",
                 "Yes",
                 "j",
-                "ja",
-                "1",
+                "ja"
                 "TRUE",
                 "true",
                 "True",
@@ -193,15 +195,11 @@ dict_options_inclusion_criteria_title_and_abstract,
                 "n",
                 "no",
                 "No",
-                "0",
                 "FALSE",
                 "false",
                 "False",
             ]:
                 vote = False
-                skip = 2
-            elif isinstance(vote, int) in int(vote) in valid_values:
-                vote = int(vote)
                 skip = 2
             elif vote in ["p", "pass", "Pass"]:
                 vote = None
@@ -216,15 +214,18 @@ dict_options_inclusion_criteria_title_and_abstract,
                     target_value_of_inclusion_criteria,
                     list_index_positive_vote,
                 )
+            elif any([isinstance(valid_values[x], int) for x in valid_values]) and vote.isdigit() and int(vote) in valid_values:
+                vote = int(vote)
+                skip = 2
             else:
-                wrong_value_message = f"Wrong input. Valid values are: {valid_values}. "
+                wrong_value_message = f"Wrong input {vote}. Valid values are: {valid_values}. "
                 if True in valid_values:
                     wrong_value_message += (
-                        "You may use y/yes/Yes/j/ja/1/TRUE/true/True for True. "
+                        "You may use y/yes/Yes/j/ja/TRUE/true/True for True. "
                     )
                 if False in valid_values:
                     wrong_value_message += (
-                        "You may use n/no/No/0/FALSE/false/False for False. "
+                        "You may use n/no/No/FALSE/false/False for False. "
                     )
                 wrong_value_message += "To skip the question use p/pass/Pass and to terminate the script, use Exit/exit/Quit/quit/x. If you use an invalid key again, you will skip automatically."
                 print(wrong_value_message)
@@ -252,6 +253,7 @@ def save_and_quit(
     print(f"Saved outputs to {output_file}.\n")
     assess_titles(data, inclusion_criteria_title)
     # Only works if all columns have already been created, ie. if all titles have been pre-selected already.
+    print(data.columns)
     assessed_papers, left_to_assess_papers = assess_title_and_abstract(
         data, inclusion_criteria_title, inclusion_criteria_title_and_abstract
     )

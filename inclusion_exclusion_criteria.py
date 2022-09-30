@@ -389,13 +389,13 @@ def save_and_quit(
 
         print(
             f"Papers are relevant, if they fullfill the following inclusion criteria: "
-            f"\n Does the title {inclusion_criteria_title[0]}, And does the paper... {inclusion_criteria_title_and_abstract[0:number_of_inclusion_criteria]} (or is included exceptionally as it is {inclusion_criteria_title_and_abstract[list_index_positive_vote]})."
+            f"\n Does the title {inclusion_criteria_title[0]}, And does the paper... {inclusion_criteria_title_and_abstract[0:number_of_inclusion_criteria]} (or is included exceptionally: {inclusion_criteria_title_and_abstract[list_index_positive_vote]})."
         )
         print(
             f"Intermediate number of relevant papers: {sum(data['Include'])} ({round(sum(data['Include'])/assessed_papers*100,2)} % of assessed papers)"
         )
         print(
-            f"Within those, intermediate number of otherwise relevant papers: {data[inclusion_criteria_title_and_abstract[6]].sum()} ({round(data[inclusion_criteria_title_and_abstract[6]].sum()/assessed_papers*100,2)} % of assessed papers)"
+            f"Within those, intermediate number of positive-vetoed relevant papers: {data[inclusion_criteria_title_and_abstract[list_index_positive_vote]].sum()} ({round(data[inclusion_criteria_title_and_abstract[list_index_positive_vote]].sum()/assessed_papers*100,2)} % of assessed papers)"
         )
 
     sys.exit()

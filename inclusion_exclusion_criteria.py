@@ -426,6 +426,7 @@ def evaluate_title_and_abstract(
     number_of_inclusion_criteria,
     target_value_of_inclusion_criteria,
     list_index_positive_vote,
+    skip_papers
 ):
     data = pd.read_csv(file).reset_index(drop=True)
 
@@ -476,8 +477,8 @@ def evaluate_title_and_abstract(
 
     count = 0
     for i in data.index:
-        # If you want to skip to the less-relevant paper abstracts:
-        # i += 1000
+        # skipping ahead in the paper index
+        i += skip_papers
         # Makey sure that i does not increase over actual number of papers when skipping to higher numbers
         if i > len(data.index) - 1:
             save_and_quit(

@@ -291,7 +291,6 @@ def save_and_quit(
         ]
 
         data["Include"] = criterium_target_value
-
         # Include based on max vote ("exceptional" performance for one of the criteria)
         for criteria in inclusion_criteria_title_and_abstract[
             0:number_of_inclusion_criteria
@@ -428,10 +427,18 @@ def evaluate_title_and_abstract(
     target_value_of_inclusion_criteria,
     list_index_positive_vote,
 ):
-    data = pd.read_csv(file)
+    data = pd.read_csv(file).reset_index(drop=True)
+
     print(f"Original number of literature to assess: {len(data.index)}")
-    data_with_votes = pd.read_csv(output_file)
+
+    data_with_votes = pd.read_csv(output_file).reset_index(drop=True)
+    data_with_votes.drop(
+        data.columns[data.columns.str.contains("unnamed", case=False)],
+        axis=1,
+        inplace=True,
+    )
     data = data.merge(data_with_votes, how="left")
+
     data.drop(
         data.columns[data.columns.str.contains("unnamed", case=False)],
         axis=1,

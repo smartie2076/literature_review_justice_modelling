@@ -162,6 +162,15 @@ def get_vote_on_paper(
                     displayed_paper_info = paper_author_year_title_abstract(
                         data, paper_id, title, displayed_paper_info
                     )
+            elif (
+                isinstance(
+                    int(data.loc[paper_id, primarily_assessed_inclusion_criteria[i]]),
+                    int,
+                )
+                is True
+            ):
+                vote = int(data.loc[paper_id, primarily_assessed_inclusion_criteria[i]])
+                skip = 2
             else:
                 # No value for inclusion criteria stored - print information to receive a vote
                 displayed_paper_info = paper_author_year_title_abstract(

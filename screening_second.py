@@ -15,6 +15,7 @@ inclusion_criteria_title_and_abstract = [
     "Who might be interested in the paper? (1) Martha (local/consumer), (2) Jonathan (national), (3) Luisa (heat/sufficiency), (4) Alex (theory), (5) any.",
     "Paper must be included! (Veto)",
     "Paper is included based on the veto above, but is only relevant for the backgroud section.",
+    "Discussion/2nd opinion necessary."
 ]
 
 dict_options_inclusion_criteria_title_and_abstract = {
@@ -26,6 +27,7 @@ dict_options_inclusion_criteria_title_and_abstract = {
     inclusion_criteria_title_and_abstract[5]: [1, 2, 3, 4, 5],
     inclusion_criteria_title_and_abstract[6]: [True, False],
     inclusion_criteria_title_and_abstract[7]: [True, False],
+    inclusion_criteria_title_and_abstract[8]: [True, False]
 }
 
 exclusion_criteria = [""]
@@ -51,4 +53,5 @@ inclusion_exclusion_criteria.evaluate_title_and_abstract(
     target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
     number_of_inclusion_criteria=number_of_inclusion_criteria,
     list_index_positive_vote=list_index_positive_vote,
+    skip_papers = 500
 )

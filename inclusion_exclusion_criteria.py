@@ -426,7 +426,7 @@ def evaluate_title_and_abstract(
     number_of_inclusion_criteria,
     target_value_of_inclusion_criteria,
     list_index_positive_vote,
-    skip_papers
+    skip_papers,
 ):
     data = pd.read_csv(file).reset_index(drop=True)
 

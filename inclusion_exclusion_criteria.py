@@ -219,14 +219,14 @@ def get_vote_on_paper(
                 skip = 2
             elif vote in ["Exit", "Quit", "exit", "quit", "x", "q"]:
                 save_and_quit(
-                    output_file,
-                    data,
-                    inclusion_criteria_title,
-                    inclusion_criteria_title_and_abstract,
-                    dict_options_inclusion_criteria_title_and_abstract,
-                    number_of_inclusion_criteria,
-                    target_value_of_inclusion_criteria,
-                    list_index_positive_vote,
+                    output_file=output_file,
+                    data=data,
+                    inclusion_criteria_title=inclusion_criteria_title,
+                    inclusion_criteria_title_and_abstract=inclusion_criteria_title_and_abstract,
+                    dict_options_inclusion_criteria_title_and_abstract=dict_options_inclusion_criteria_title_and_abstract,
+                    target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
+                    number_of_inclusion_criteria=number_of_inclusion_criteria,
+                    list_index_positive_vote=list_index_positive_vote,
                 )
             elif (
                 any([isinstance(x, int) for x in valid_values])
@@ -482,13 +482,14 @@ def evaluate_title_and_abstract(
         # Makey sure that i does not increase over actual number of papers when skipping to higher numbers
         if i > len(data.index) - 1:
             save_and_quit(
-                output_file,
-                data,
-                inclusion_criteria_title,
-                inclusion_criteria_title_and_abstract,
-                dict_options_inclusion_criteria_title_and_abstract,
-                number_of_inclusion_criteria,
-                list_index_positive_vote,
+                output_file=output_file,
+                data=data,
+                inclusion_criteria_title=inclusion_criteria_title,
+                inclusion_criteria_title_and_abstract=inclusion_criteria_title_and_abstract,
+                dict_options_inclusion_criteria_title_and_abstract=dict_options_inclusion_criteria_title_and_abstract,
+                target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
+                number_of_inclusion_criteria=number_of_inclusion_criteria,
+                list_index_positive_vote=list_index_positive_vote,
             )
         # Boolean values stored as np.bool_
         try:
@@ -525,14 +526,14 @@ def evaluate_title_and_abstract(
 
     # Save and quit when program end is reached:
     save_and_quit(
-        output_file,
-        data,
-        inclusion_criteria_title,
-        inclusion_criteria_title_and_abstract,
-        dict_options_inclusion_criteria_title_and_abstract,
-        number_of_inclusion_criteria,
-        target_value_of_inclusion_criteria,
-        list_index_positive_vote,
+        output_file=output_file,
+        data=data,
+        inclusion_criteria_title=inclusion_criteria_title,
+        inclusion_criteria_title_and_abstract=inclusion_criteria_title_and_abstract,
+        dict_options_inclusion_criteria_title_and_abstract=dict_options_inclusion_criteria_title_and_abstract,
+        target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
+        number_of_inclusion_criteria=number_of_inclusion_criteria,
+        list_index_positive_vote=list_index_positive_vote,
     )
 
 

@@ -25,7 +25,7 @@ dict_options_inclusion_criteria_title_and_abstract = {
     inclusion_criteria_title_and_abstract[1]: [0, 1, 2, 3],
     inclusion_criteria_title_and_abstract[2]: [0, 1, 2, 3],
     inclusion_criteria_title_and_abstract[3]: [1, 2, 3],
-    inclusion_criteria_title_and_abstract[4]: [1, 2, 3, 4, 5, 6, 7, 8],
+    inclusion_criteria_title_and_abstract[4]: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     inclusion_criteria_title_and_abstract[5]: [1, 2, 3, 4, 5],
     inclusion_criteria_title_and_abstract[6]: [True, False],
     inclusion_criteria_title_and_abstract[7]: [True, False],

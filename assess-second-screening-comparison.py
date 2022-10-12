@@ -93,6 +93,56 @@ data_with_votes_joined["Total of 2nd Screening Points"].value_counts().plot(
 plt.savefig("./" + file_core[:-4] + "-total-points" + "-joined" + ".png")
 plt.close()
 
+data_with_votes_joined["Large Voting Gap"] = [
+    abs(
+        data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[0] + "(M)"]
+        - data_with_votes_joined.loc[
+            id, inclusion_criteria_title_and_abstract[0] + "(J)"
+        ]
+    )
+    >= 2
+    for id in data_with_votes_joined.index
+]
+data_with_votes_joined["Large Voting Gap"] += [
+    abs(
+        data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[1] + "(M)"]
+        - data_with_votes_joined.loc[
+            id, inclusion_criteria_title_and_abstract[1] + "(J)"
+        ]
+    )
+    >= 2
+    for id in data_with_votes_joined.index
+]
+data_with_votes_joined["Large Voting Gap"] += [
+    abs(
+        data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[2] + "(M)"]
+        - data_with_votes_joined.loc[
+            id, inclusion_criteria_title_and_abstract[2] + "(J)"
+        ]
+    )
+    >= 2
+    for id in data_with_votes_joined.index
+]
+
+print(
+    f"\nNumber of papers with large voting gap: {sum(data_with_votes_joined['Large Voting Gap'])}"
+)
+large_voting_gap = data_with_votes_joined[
+    data_with_votes_joined["Large Voting Gap"] == True
+]
+print(f"Following papers should be discussed:")
+print(large_voting_gap["Article Title"])
+
+print(
+    f"\nAdditionally, following papers were marked as {inclusion_criteria_title_and_abstract[8]}:"
+)
+data_with_votes_joined["TBD"] = (
+    data_with_votes_joined[inclusion_criteria_title_and_abstract[8] + "(M)"]
+    + data_with_votes_joined[inclusion_criteria_title_and_abstract[8] + "(J)"]
+)
+tbd = data_with_votes_joined[data_with_votes_joined["TBD"] == True]
+print(tbd["Article Title"])
+
 
 def get_relevant_papers(target_value, exceptionality, save=False):
 
@@ -166,10 +216,10 @@ for margin in [-2, -1, 0, 1, 2, 3, 4]:
     ]
 
 print(
-    "Count of relevant papers dependent on points for exceptionality (columns) and total points (rows):"
+    "\nCount of relevant papers dependent on points for exceptionality (columns) and total points (rows):"
 )
 print(count_relevant)
 print(
-    "Relative relevance of papers dependent on points for exceptionality (columns) and total points (rows):"
+    "\nRelative relevance of papers dependent on points for exceptionality (columns) and total points (rows):"
 )
 print(count_relevant / len(data_with_votes_joined.index))

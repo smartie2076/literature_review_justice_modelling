@@ -35,27 +35,26 @@ def title_multirow(text):
         i += letters_in_line
     return text
 
+for criteria_number in range(0,6,1):
+    title = title_multirow(inclusion_criteria_title_and_abstract[criteria_number])
+    data_with_votes[inclusion_criteria_title_and_abstract[criteria_number]].value_counts().plot(
+        kind="bar", title=title
+    )
+    plt.tight_layout()
+    if criteria_number == 0:
+        suffix = "_disribution_vote_definition_indicators"
+    elif criteria_number == 1:
+        suffix = "_disribution_vote_application_indicators"
+    elif criteria_number == 2:
+        suffix = "_disribution_vote_recognition_groups"
+    elif criteria_number == 3:
+        suffix = "_distribution_method_type"
+    elif criteria_number == 4:
+        suffix = "_distribution_topic"
+    elif criteria_number == 5:
+        suffix = "_distribution_reader"
+    else:
+        print("Invalid criteria number range.")
 
-title = title_multirow(inclusion_criteria_title_and_abstract[3])
-data_with_votes[inclusion_criteria_title_and_abstract[3]].value_counts().plot(
-    kind="bar", title=title
-)
-plt.tight_layout()
-plt.savefig("./" + output_file[:-4] + "_distribution_method_type.png")
-plt.close()
-
-title = title_multirow(inclusion_criteria_title_and_abstract[4])
-data_with_votes[inclusion_criteria_title_and_abstract[4]].value_counts().plot(
-    kind="bar", title=title
-)
-plt.tight_layout()
-plt.savefig("./" + output_file[:-4] + "_distribution_topic.png")
-plt.close()
-
-title = title_multirow(inclusion_criteria_title_and_abstract[5])
-data_with_votes[inclusion_criteria_title_and_abstract[5]].value_counts().plot(
-    kind="bar", title=title
-)
-plt.tight_layout()
-plt.savefig("./" + output_file[:-4] + "_distribution_reader.png")
-plt.close()
+    plt.savefig("./" + output_file[:-4] + suffix + ".png")
+    plt.close()

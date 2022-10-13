@@ -35,26 +35,64 @@ def title_multirow(text):
         i += letters_in_line
     return text
 
-for criteria_number in range(0,6,1):
+
+for criteria_number in range(0, 6, 1):
     title = title_multirow(inclusion_criteria_title_and_abstract[criteria_number])
-    data_with_votes[inclusion_criteria_title_and_abstract[criteria_number]].value_counts().plot(
-        kind="bar", title=title
-    )
-    plt.tight_layout()
+    counts = data_with_votes[
+        inclusion_criteria_title_and_abstract[criteria_number]
+    ].value_counts()
+    # counts.reindex()
     if criteria_number == 0:
         suffix = "_disribution_vote_definition_indicators"
+        counts = counts.sort_index()
     elif criteria_number == 1:
         suffix = "_disribution_vote_application_indicators"
+        counts = counts.sort_index()
     elif criteria_number == 2:
         suffix = "_disribution_vote_recognition_groups"
+        counts = counts.sort_index()
     elif criteria_number == 3:
         suffix = "_distribution_method_type"
+        counts.rename(
+            index={
+                1.0: "Numerical approach",
+                2.0: "Theoretical Framework",
+                3.0: "Other",
+            },
+            inplace=True,
+        )
     elif criteria_number == 4:
         suffix = "_distribution_topic"
+        counts.rename(
+            index={
+                1.0: "regional equity",
+                2.0: "carbon pricing/tax",
+                3.0: "SDG",
+                4.0: "electrification",
+                5.0: "water-energy-nexus",
+                6.0: "energy transition",
+                7.0: "policy",
+                8.0: "data science",
+                9.0: "Other",
+            },
+            inplace=True,
+        )
     elif criteria_number == 5:
         suffix = "_distribution_reader"
+        counts.rename(
+            index={
+                1.0: "Martha",
+                2.0: "Jonathan",
+                3.0: "Luisa",
+                4.0: "Alex",
+                5.0: "Alle",
+            },
+            inplace=True,
+        )
     else:
         print("Invalid criteria number range.")
 
+    counts.plot(kind="bar", title=title)
+    plt.tight_layout()
     plt.savefig("./" + output_file[:-4] + suffix + ".png")
     plt.close()

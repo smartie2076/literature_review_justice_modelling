@@ -41,7 +41,7 @@ for criteria_number in range(0, 6, 1):
     counts = data_with_votes[
         inclusion_criteria_title_and_abstract[criteria_number]
     ].value_counts()
-    # counts.reindex()
+
     if criteria_number == 0:
         suffix = "_disribution_vote_definition_indicators"
         counts = counts.sort_index()

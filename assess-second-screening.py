@@ -93,6 +93,21 @@ for criteria_number in range(0, 6, 1):
         print("Invalid criteria number range.")
 
     counts.plot(kind="bar", title=title)
+
     plt.tight_layout()
     plt.savefig("./" + output_file[:-4] + suffix + ".png")
     plt.close()
+
+data_with_votes["Total of 2nd Screening Points"] = sum(
+    [
+        data_with_votes[
+            inclusion_criteria_title_and_abstract[criteria_number]
+        ]
+        for criteria_number in range(0, 3)
+    ]
+)
+data_with_votes["Total of 2nd Screening Points"].value_counts().sort_index().plot(
+    kind="bar", title="Total of 2nd Screening Points"
+)
+plt.savefig("./" + output_file[:-4] + "-total-points" + ".png")
+plt.close()

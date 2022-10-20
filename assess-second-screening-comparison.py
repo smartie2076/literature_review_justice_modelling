@@ -24,7 +24,9 @@ inclusion_criteria_title_and_abstract = [
 ]
 
 # Read from file and drop all without a vote in the relevant criteria
-data_with_votes_m = pd.read_csv(files[0]).dropna(
+data_with_votes_m = pd.read_csv(files[0])
+to_be_assessed = len(data_with_votes_m)
+data_with_votes_m.dropna(
     subset=[inclusion_criteria_title_and_abstract[i] for i in range(0, 3)]
 )
 data_with_votes_j = pd.read_csv(files[1]).dropna(
@@ -89,7 +91,10 @@ data_with_votes_joined["Total of 2nd Screening Points"] = sum(
 )
 data_with_votes_joined[
     "Total of 2nd Screening Points"
-].value_counts().sort_index().plot(kind="bar", title="Total of 2nd Screening Points")
+].value_counts().sort_index().plot(
+    kind="bar",
+    title=f"Total of 2nd Screening Points \n ({len(data_with_votes_joined)}/{round((len(data_with_votes_joined)/to_be_assessed)*100,2)}% assessed)",
+)
 plt.savefig("./" + file_core[:-4] + "-total-points" + "-joined" + ".png")
 plt.close()
 
@@ -174,6 +179,8 @@ def get_relevant_papers(target_value, exceptionality, save=False):
 
     data_with_votes_joined["Include"] += other_criterion
 
+    count_vetos = sum(other_criterion)
+
     other_criterion = [
         data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[6] + "(J)"]
         == True
@@ -181,6 +188,7 @@ def get_relevant_papers(target_value, exceptionality, save=False):
     ]
 
     data_with_votes_joined["Include"] += other_criterion
+    count_vetos += sum(other_criterion)
 
     # Only write included papers to file (as we have a boolean column, adding True+True does not result in 2)
     if save is True:
@@ -196,14 +204,19 @@ def get_relevant_papers(target_value, exceptionality, save=False):
             f"Number of relevant papers: \n"
             f"More then {target_value} points: {sum(criterium_target_value)}\n"
             f"+ At least one sees exceptionality (sum of points {exceptionality}): {sum(criterium_maximum)}\n"
-            f"+ Vetoed in: {sum(other_criterion)}\n"
+            f"+ Vetoed in: {count_vetos}\n"  # Vetos of each individual count, ie. not two vetos required to include the paper
             f"= Total relevant papers: {relevant_papers} (of {len(data_with_votes_joined)} papers / ({round(relevant_papers/len(data_with_votes_joined)*100,1)} %)"
         )
     return relevant_papers
 
 
 count_relevant = pd.DataFrame(
-    columns=[(exceptionality - 1), str(exceptionality), str(exceptionality + 1)]
+    columns=[
+        (exceptionality - 1),
+        str(exceptionality),
+        str(exceptionality + 1),
+        "Only vetos and total points",
+    ]
 )
 
 for margin in [-2, -1, 0, 1, 2, 3, 4]:
@@ -213,6 +226,7 @@ for margin in [-2, -1, 0, 1, 2, 3, 4]:
             target_value + margin, exceptionality, save=any([margin == 0])
         ),
         get_relevant_papers(target_value + margin, exceptionality + 1),
+        get_relevant_papers(target_value + margin, exceptionality + 2),
     ]
 
 print(

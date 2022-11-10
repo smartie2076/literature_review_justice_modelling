@@ -100,9 +100,7 @@ for criteria_number in range(0, 6, 1):
 
 data_with_votes["Total of 2nd Screening Points"] = sum(
     [
-        data_with_votes[
-            inclusion_criteria_title_and_abstract[criteria_number]
-        ]
+        data_with_votes[inclusion_criteria_title_and_abstract[criteria_number]]
         for criteria_number in range(0, 3)
     ]
 )
@@ -111,3 +109,43 @@ data_with_votes["Total of 2nd Screening Points"].value_counts().sort_index().plo
 )
 plt.savefig("./" + output_file[:-4] + "-total-points" + ".png")
 plt.close()
+
+TITLE = "Article Title"
+ABSTRACT = "Abstract"
+AUTHORS = "Authors"
+
+string_title = data_with_votes[TITLE].sum()
+string_abstracts = data_with_votes[ABSTRACT].sum()
+string_title_and_abstract = string_title + string_abstracts
+string_authors = data_with_votes[AUTHORS].sum()
+# Remove all names, so that only surnames remain
+import re
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+
+string_authors = re.sub(",.*?;", ";", string_authors)
+
+
+def plot_wordcloud(title, text):
+    # Compare also: https://www.python-lernen.de/wordcloud-erstellen-python.htm
+    # STOPWORDS.update(liste_der_unerwuenschten_woerter), now manually removed from string
+    wordcloud = WordCloud(
+        background_color="white", max_font_size=40, collocations=True
+    ).generate(text)
+    plt.figure(figsize=(12, 8))
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.title(title)
+    wordcloud_name = (
+        "./" + output_file[:-4] + "_wordcloud_" + title.replace(" ", "_") + ".png"
+    )
+    print(wordcloud_name)
+    plt.savefig(wordcloud_name)
+    plt.close()
+    return
+
+
+plot_wordcloud("Titles", string_title)
+plot_wordcloud("Abstracts", string_abstracts)
+plot_wordcloud("Titles and Abstracts", string_title_and_abstract)
+plot_wordcloud("Authors", string_authors)

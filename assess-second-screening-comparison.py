@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
-target_value = 12  # At least two points in each
-exceptionality = 5  # min 5, ie. one of two voted exceptionality
+TOTAL_POINTS = "Total of 2nd Screening Points"
+target_value = 13  # At least two points in each
+exceptionality = 6  # min 5, ie. one of two voted exceptionality
 
 file_core = (
     "2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
@@ -81,7 +83,7 @@ for criteria_number in range(0, 3, 1):
     plt.savefig("./" + file_core[:-4] + suffix + "-joined" + ".png")
     plt.close()
 
-data_with_votes_joined["Total of 2nd Screening Points"] = sum(
+data_with_votes_joined[TOTAL_POINTS] = sum(
     [
         data_with_votes_joined[
             inclusion_criteria_title_and_abstract[criteria_number] + "(sum)"
@@ -89,9 +91,7 @@ data_with_votes_joined["Total of 2nd Screening Points"] = sum(
         for criteria_number in range(0, 3)
     ]
 )
-data_with_votes_joined[
-    "Total of 2nd Screening Points"
-].value_counts().sort_index().plot(
+data_with_votes_joined[TOTAL_POINTS].value_counts().sort_index().plot(
     kind="bar",
     title=f"Total of 2nd Screening Points \n ({len(data_with_votes_joined)}/{round((len(data_with_votes_joined)/to_be_assessed)*100,2)}% assessed)",
 )
@@ -149,16 +149,22 @@ tbd = data_with_votes_joined[data_with_votes_joined["TBD"] == True]
 print(tbd["Article Title"])
 
 
-def get_relevant_papers(target_value, exceptionality, save=False):
+def get_relevant_papers(
+    data_with_votes_joined, target_value, exceptionality, save=False
+):
+    INCLUDE = "Include"
+    SUFFIX_POINTS = "_points"
 
-    # Include based on True/False criteria and overall target points
-    criterium_target_value = [
-        data_with_votes_joined.loc[id, "Total of 2nd Screening Points"]
-        >= target_value  # At least one of us has to have voted 3
-        for id in data_with_votes_joined.index
+    """
+    Order of relevance:
+    Exceptionality > Total Points > Vetoed Twice > Vetoed Once"""
+
+    ### DETERMINE ALL PAPERS THAT ARE INCLUDED AS BOTH OF US SAID THAT THEY ARE EXCEPTIONAL ###
+    INCLUDED_EXCEPTIONAL = "Include_only_due_to_univocal_exceptionality"
+    data_with_votes_joined[INCLUDED_EXCEPTIONAL] = [
+        False for i in data_with_votes_joined.index
     ]
 
-    data_with_votes_joined["Include"] = criterium_target_value
     # Include based on max vote ("exceptional" performance for one of the criteria)
     for criteria in inclusion_criteria_title_and_abstract[0:3]:
         # Maximum reachable points
@@ -167,47 +173,218 @@ def get_relevant_papers(target_value, exceptionality, save=False):
             data_with_votes_joined.loc[id, criteria + "(sum)"] >= maximum
             for id in data_with_votes_joined.index
         ]
+        data_with_votes_joined[INCLUDED_EXCEPTIONAL] += criterium_maximum
+        data_with_votes_joined[INCLUDE] += criterium_maximum
 
-        data_with_votes_joined["Include"] += criterium_maximum
+    data_with_votes_joined[INCLUDED_EXCEPTIONAL + SUFFIX_POINTS] = (
+        data_with_votes_joined[INCLUDED_EXCEPTIONAL]
+        * data_with_votes_joined[TOTAL_POINTS]
+    )
+
+    ### DETERMINE ALL PAPERS THAT ARE SO RELEVANT THAT THEY GOT THE TARGET VALUE OF POINTS ###
+
+    INCLUDED_TARGET_VALUE = "Include_due_to_target_value_points"
+    # Include based on True/False criteria and overall target points
+    criterium_target_value = [
+        data_with_votes_joined.loc[id, INCLUDED_EXCEPTIONAL] == False
+        and data_with_votes_joined.loc[id, TOTAL_POINTS]
+        >= target_value  # At least one of us has to have voted 3
+        for id in data_with_votes_joined.index
+    ]
+    data_with_votes_joined[INCLUDED_TARGET_VALUE] = criterium_target_value
+    data_with_votes_joined[INCLUDED_TARGET_VALUE + SUFFIX_POINTS] = (
+        data_with_votes_joined[TOTAL_POINTS]
+        * data_with_votes_joined[INCLUDED_TARGET_VALUE]
+    )
+
+    data_with_votes_joined[INCLUDE] = criterium_target_value
+
+    all_relevant_papers_only_double_vote = data_with_votes_joined[INCLUDE]
 
     # Add papers that are included due to exceptional vote
-    other_criterion = [
+    vetoes_martha = [
         data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[6] + "(M)"]
         == True
         for id in data_with_votes_joined.index
     ]
+    data_with_votes_joined[INCLUDE] += vetoes_martha
 
-    data_with_votes_joined["Include"] += other_criterion
-
-    count_vetos = sum(other_criterion)
-
-    other_criterion = [
+    vetoes_jonathan = [
         data_with_votes_joined.loc[id, inclusion_criteria_title_and_abstract[6] + "(J)"]
         == True
         for id in data_with_votes_joined.index
     ]
+    data_with_votes_joined[INCLUDE] += vetoes_jonathan
 
-    data_with_votes_joined["Include"] += other_criterion
-    count_vetos += sum(other_criterion)
+    INCLUDED_DOUBLE_VETO = "Included_only_due_to_double_veto"
+    data_with_votes_joined["Double_veto"] = [
+        vetoes_martha[i] * vetoes_jonathan[i] for i in range(0, len(vetoes_jonathan))
+    ]
+    data_with_votes_joined[INCLUDED_DOUBLE_VETO] = [
+        data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] == False
+        and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] == False
+        and vetoes_martha[i] == True
+        and vetoes_jonathan[i] == True
+        for i in range(0, len(vetoes_jonathan))
+    ]
+    data_with_votes_joined["Double_veto" + SUFFIX_POINTS] = (
+        data_with_votes_joined[TOTAL_POINTS] * data_with_votes_joined["Double_veto"]
+    )
+    data_with_votes_joined[INCLUDED_DOUBLE_VETO + SUFFIX_POINTS] = (
+        data_with_votes_joined[TOTAL_POINTS]
+        * data_with_votes_joined[INCLUDED_DOUBLE_VETO]
+    )
+    vetoes_two = sum(data_with_votes_joined[INCLUDED_DOUBLE_VETO])
+
+    INCLUDED_SINGLE_VETO = "Included_only_due_to_single_veto"
+    data_with_votes_joined["Single_veto"] = [
+        (vetoes_martha[i] == True and vetoes_jonathan[i] == False)
+        or (vetoes_martha[i] == False and vetoes_jonathan[i] == True)
+        for i in range(0, len(vetoes_jonathan))
+    ]
+    data_with_votes_joined["Single_veto" + SUFFIX_POINTS] = (
+        data_with_votes_joined[TOTAL_POINTS] * data_with_votes_joined["Single_veto"]
+    )
+    data_with_votes_joined[INCLUDED_SINGLE_VETO] = [
+        data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] == False
+        and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] == False
+        and (
+            (vetoes_martha[i] == True and vetoes_jonathan[i] == False)
+            or (vetoes_martha[i] == False and vetoes_jonathan[i] == True)
+        )
+        for i in range(0, len(vetoes_jonathan))
+    ]
+    data_with_votes_joined[INCLUDED_SINGLE_VETO + SUFFIX_POINTS] = (
+        data_with_votes_joined[TOTAL_POINTS]
+        * data_with_votes_joined[INCLUDED_SINGLE_VETO]
+    )
+
+    vetoes_one = sum(data_with_votes_joined[INCLUDED_SINGLE_VETO])
+
+    all_relevant_papers_only_double_vote += vetoes_two
+    relevant_papers_two_vetoes = all_relevant_papers_only_double_vote.sum()
+    number_of_relevant_papers = data_with_votes_joined[INCLUDE].sum()
 
     # Only write included papers to file (as we have a boolean column, adding True+True does not result in 2)
     if save is True:
-        data_with_votes_joined[data_with_votes_joined["Include"] == True].to_csv(
-            output_file + "-only-included-joined.csv"
+
+        data_relevant_papers = data_with_votes_joined[
+            data_with_votes_joined[INCLUDE] == True
+        ]
+        data_relevant_papers.to_csv(output_file + "-only-included-joined.csv")
+
+        get_inclusion_kinds(
+            data_relevant_papers,
+            INCLUDE,
+            SUFFIX_POINTS,
+            INCLUDED_EXCEPTIONAL,
+            INCLUDED_TARGET_VALUE,
+            INCLUDED_DOUBLE_VETO,
+            INCLUDED_SINGLE_VETO,
         )
+
         print(
             f"Saved list of relevant papers to {output_file[:-4]}-only-included-joined.csv. \n"
         )
-    relevant_papers = data_with_votes_joined["Include"].sum()
-    if save is True:
+
         print(
             f"Number of relevant papers: \n"
-            f"More then {target_value} points: {sum(criterium_target_value)}\n"
-            f"+ At least one sees exceptionality (sum of points {exceptionality}): {sum(criterium_maximum)}\n"
-            f"+ Vetoed in: {count_vetos}\n"  # Vetos of each individual count, ie. not two vetos required to include the paper
-            f"= Total relevant papers: {relevant_papers} (of {len(data_with_votes_joined)} papers / ({round(relevant_papers/len(data_with_votes_joined)*100,1)} %)"
+            f"  Exceptional (sum of points {exceptionality}): {sum(data_with_votes_joined[INCLUDED_EXCEPTIONAL])}\n"
+            f"+ More then {target_value} points: {sum(data_with_votes_joined[INCLUDED_TARGET_VALUE])}\n"
+            f"+ Vetoed in twice: {vetoes_two}\n"
+            f"+ Vetoed in once: {vetoes_one}\n"  # Vetos of each individual count, ie. not two vetos required to include the paper
+            f"= Total relevant papers: {number_of_relevant_papers} (of {len(data_with_votes_joined)} papers / ({round(number_of_relevant_papers/len(data_with_votes_joined)*100,1)}) %)"
+            f"(Total relevant papers if only two vetoes valid: {relevant_papers_two_vetoes}"
         )
-    return relevant_papers
+
+    return number_of_relevant_papers
+
+
+def get_inclusion_kinds(
+    relevant_papers,
+    INCLUDE,
+    SUFFIX_POINTS,
+    INCLUDED_EXCEPTIONAL,
+    INCLUDED_TARGET_VALUE,
+    INCLUDED_DOUBLE_VETO,
+    INCLUDED_SINGLE_VETO,
+):
+
+    ###   Plot distribution of reason for relevance relative to total points archieved ###
+
+    point_count = pd.DataFrame()
+    columns = [
+        INCLUDED_EXCEPTIONAL + SUFFIX_POINTS,
+        INCLUDED_TARGET_VALUE + SUFFIX_POINTS,
+        INCLUDED_DOUBLE_VETO + SUFFIX_POINTS,
+        INCLUDED_SINGLE_VETO + SUFFIX_POINTS,
+    ]
+    for column in columns:
+        point_count[column] = relevant_papers[column].value_counts().sort_index()
+
+    point_count = point_count.drop([0])
+
+    point_count.plot.bar(
+        stacked=True,
+        title=f"Total of 2nd Screening Points \n Relevant papers: {len(relevant_papers)}",
+    )
+    plt.savefig(
+        "./" + file_core[:-4] + "-total-points" + "-joined-only-relevant" + ".png"
+    )
+    plt.close()
+
+    for person in ["(M)", "(J)"]:
+        relevant_papers["Numeric" + person] = [
+            relevant_papers.loc[i, inclusion_criteria_title_and_abstract[3] + person]
+            == 1
+            for i in relevant_papers.index
+        ]
+        relevant_papers["Theoretical" + person] = [
+            relevant_papers.loc[i, inclusion_criteria_title_and_abstract[3] + person]
+            == 2
+            for i in relevant_papers.index
+        ]
+        relevant_papers["Other" + person] = [
+            relevant_papers.loc[i, inclusion_criteria_title_and_abstract[3] + person]
+            == 3
+            for i in relevant_papers.index
+        ]
+        relevant_papers["Numeric" + person + SUFFIX_POINTS] = (
+            relevant_papers[TOTAL_POINTS] * relevant_papers["Numeric" + person]
+        )
+        relevant_papers["Theoretical" + person + SUFFIX_POINTS] = (
+            relevant_papers[TOTAL_POINTS] * relevant_papers["Theoretical" + person]
+        )
+        relevant_papers["Other" + person + SUFFIX_POINTS] = (
+            relevant_papers[TOTAL_POINTS] * relevant_papers["Other" + person]
+        )
+
+        relevant_kinds = pd.DataFrame()
+
+        for column in ["Numeric", "Theoretical", "Other"]:
+            relevant_kinds[column] = (
+                relevant_papers[column + person + SUFFIX_POINTS]
+                .value_counts()
+                .sort_index()
+            )
+
+        relevant_kinds = relevant_kinds.drop([0])
+
+        relevant_kinds.plot.bar(
+            stacked=True,
+            title=f"Type of relevant papers {person}\n Relevant papers: {len(relevant_papers)}, of which {sum(relevant_papers['Numeric'+person])} numeric and {sum(relevant_papers['Theoretical'+person])} theoretical",
+        )
+        plt.savefig(
+            "./"
+            + file_core[:-4]
+            + "-total-points-type-"
+            + person
+            + "-joined-only-relevant"
+            + ".png"
+        )
+        plt.close()
+
+    return
 
 
 count_relevant = pd.DataFrame(
@@ -220,13 +397,22 @@ count_relevant = pd.DataFrame(
 )
 
 for margin in [-2, -1, 0, 1, 2, 3, 4]:
+    save = False
+    if margin == 0:
+        save = True
     count_relevant.loc[target_value + margin] = [
-        get_relevant_papers(target_value + margin, exceptionality - 1),
         get_relevant_papers(
-            target_value + margin, exceptionality, save=any([margin == 0])
+            data_with_votes_joined, target_value + margin, exceptionality - 1
         ),
-        get_relevant_papers(target_value + margin, exceptionality + 1),
-        get_relevant_papers(target_value + margin, exceptionality + 2),
+        get_relevant_papers(
+            data_with_votes_joined, target_value + margin, exceptionality, save=save
+        ),
+        get_relevant_papers(
+            data_with_votes_joined, target_value + margin, exceptionality + 1
+        ),
+        get_relevant_papers(
+            data_with_votes_joined, target_value + margin, exceptionality + 2
+        ),
     ]
 
 print(

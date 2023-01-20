@@ -40,10 +40,10 @@ for i in inclusion_criteria_title_and_abstract:
     data_with_votes_j.rename(columns={i: i + "(J)"}, inplace=True)
 
 data_with_votes_joined = data_with_votes_m.merge(data_with_votes_j, how="left")
-data_with_votes_joined = data_with_votes_joined.dropna(
-    subset=[inclusion_criteria_title_and_abstract[i] + "(M)" for i in range(0, 3)]
-    + [inclusion_criteria_title_and_abstract[i] + "(J)" for i in range(0, 3)]
-)
+#data_with_votes_joined = data_with_votes_joined.dropna(
+#    subset=[inclusion_criteria_title_and_abstract[i] + "(M)" for i in range(0, 3)]
+#    + [inclusion_criteria_title_and_abstract[i] + "(J)" for i in range(0, 3)]
+#)
 
 
 def title_multirow(text):
@@ -220,11 +220,14 @@ def get_relevant_papers(
     data_with_votes_joined["Double_veto"] = [
         vetoes_martha[i] * vetoes_jonathan[i] for i in range(0, len(vetoes_jonathan))
     ]
+    #(len(vetoes_jonathan), len(data_with_votes_joined[INCLUDED_EXCEPTIONAL].values))
+    #print(data_with_votes_joined[INCLUDED_EXCEPTIONAL].index.values)
+    #print(data_with_votes_m.iloc[139])
     data_with_votes_joined[INCLUDED_DOUBLE_VETO] = [
-        data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] == False
-        and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] == False
-        and vetoes_martha[i] == True
-        and vetoes_jonathan[i] == True
+        (data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] is False
+        and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] is False
+        and vetoes_martha[i] is True
+        and vetoes_jonathan[i] is True)
         for i in range(0, len(vetoes_jonathan))
     ]
     data_with_votes_joined["Double_veto" + SUFFIX_POINTS] = (
@@ -297,8 +300,47 @@ def get_relevant_papers(
             f"(Total relevant papers if only two vetoes valid: {relevant_papers_two_vetoes}"
         )
 
+        TITLE = "Article Title"
+        ABSTRACT = "Abstract"
+        AUTHORS = "Authors"
+
+        string_title = data_relevant_papers[TITLE].sum()
+        string_abstracts = data_relevant_papers[ABSTRACT].sum()
+        string_title_and_abstract = string_title + string_abstracts
+        string_authors = data_relevant_papers[AUTHORS].sum()
+
+        string_authors = re.sub(",.*?;", ";", string_authors)
+
+        plot_wordcloud("Titles", string_title)
+        plot_wordcloud("Abstracts", string_abstracts)
+        plot_wordcloud("Titles and Abstracts", string_title_and_abstract)
+        plot_wordcloud("Authors", string_authors)
+
     return number_of_relevant_papers
 
+
+# Remove all names, so that only surnames remain
+import re
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+
+def plot_wordcloud(title, text):
+    # Compare also: https://www.python-lernen.de/wordcloud-erstellen-python.htm
+    # STOPWORDS.update(liste_der_unerwuenschten_woerter), now manually removed from string
+    wordcloud = WordCloud(
+        background_color="white", max_font_size=40, collocations=True
+    ).generate(text)
+    plt.figure(figsize=(12, 8))
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.title(title)
+    wordcloud_name = (
+            "./" + output_file + "_wordcloud_" + title.replace(" ", "_") + ".png"
+    )
+    print(wordcloud_name)
+    plt.savefig(wordcloud_name)
+    plt.close()
+    return
 
 def get_inclusion_kinds(
     relevant_papers,

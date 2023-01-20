@@ -42,4 +42,5 @@ inclusion_exclusion_criteria.evaluate_title_and_abstract(
     target_value_of_inclusion_criteria=target_value_of_inclusion_criteria,
     number_of_inclusion_criteria=number_of_inclusion_criteria,
     list_index_positive_vote=list_index_positive_vote,
+    skip_papers=0,
 )

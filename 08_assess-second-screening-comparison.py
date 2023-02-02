@@ -7,7 +7,7 @@ target_value = 13  # At least two points in each
 exceptionality = 6  # min 5, ie. one of two voted exceptionality
 
 file_core = (
-    "2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
+    "2022-07-19-Final-Keywords-1st-Screening-Jonathan-Martha-Evaluation/2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
 )
 output_file = file_core[:-4] + "-2nd-screening"
 
@@ -24,10 +24,9 @@ inclusion_criteria_title_and_abstract = [
     "Paper is included based on the veto above, but is only relevant for the backgroud section.",
     "Discussion/2nd opinion necessary.",
 ]
-
+'''
 # Read from file and drop all without a vote in the relevant criteria
 data_with_votes_m = pd.read_csv(files[0])
-to_be_assessed = len(data_with_votes_m)
 data_with_votes_m.dropna(
     subset=[inclusion_criteria_title_and_abstract[i] for i in range(0, 3)]
 )
@@ -44,7 +43,11 @@ data_with_votes_joined = data_with_votes_m.merge(data_with_votes_j, how="left")
 #    subset=[inclusion_criteria_title_and_abstract[i] + "(M)" for i in range(0, 3)]
 #    + [inclusion_criteria_title_and_abstract[i] + "(J)" for i in range(0, 3)]
 #)
-
+'''
+file_core = "2023-01-3rd-Screening-Paper-Screening/2023-01-24-Relevant-Papers-All-Data-Revoted.csv"
+output_file = file_core[:-4] + "_3rd_screening"
+data_with_votes_joined = pd.read_csv(file_core)
+to_be_assessed = len(data_with_votes_joined)
 
 def title_multirow(text):
     letters_in_line = 60
@@ -323,6 +326,7 @@ def get_relevant_papers(
 import re
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+import collections
 
 def plot_wordcloud(title, text):
     # Compare also: https://www.python-lernen.de/wordcloud-erstellen-python.htm
@@ -424,6 +428,18 @@ def get_inclusion_kinds(
             + "-joined-only-relevant"
             + ".png"
         )
+        plt.close()
+
+        journals = relevant_papers["Source Title"].value_counts()
+        journals.to_csv("./" + output_file + "_relevant_journals.csv")
+        journals.plot(kind="bar")
+        plt.savefig("./" + output_file + "_relevant_journals.png")
+        plt.close()
+
+        year = relevant_papers["Publication Year"].value_counts()
+        year.to_csv("./" + output_file + "_publication_year.csv")
+        year.plot(kind="bar")
+        plt.savefig("./" + output_file + "_publication_year.png")
         plt.close()
 
     return

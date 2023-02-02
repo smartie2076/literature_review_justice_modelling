@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 files = [
-    "2022-07-19-Final-Keywords-Publications-Part1.xls",
-    "2022-07-19-Final-Keywords-Publications-Part2.xls",
+    "2022-07-19-Final-Keywords-Title-Relevance/2022-07-19-Final-Keywords-Publications-Part1.xls",
+    "2022-07-19-Final-Keywords-Title-Relevance/2022-07-19-Final-Keywords-Publications-Part2.xls",
 ]
 
 result_file_name = "2022-07-19-Final-Keywords-Publications-merged"

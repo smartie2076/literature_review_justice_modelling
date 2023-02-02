@@ -26,7 +26,7 @@ dict_options_inclusion_criteria_title_and_abstract = {
 
 exclusion_criteria = [""]
 
-file = "2022-07-19-Final-Keywords-Publications-merged-Count.csv"
+file = "2022-07-19-Final-Keywords-Title-Relevance/2022-07-19-Final-Keywords-Publications-merged-Count.csv"
 output_file = file[:-4] + "-votes.csv"
 
 target_value_of_inclusion_criteria = 5

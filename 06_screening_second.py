@@ -34,7 +34,7 @@ dict_options_inclusion_criteria_title_and_abstract = {
 
 exclusion_criteria = [""]
 
-file = "2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
+file = "2022-07-19-Final-Keywords-1st-Screening-Jonathan-Martha-Results/2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
 output_file = file[:-4] + "-2nd-screening"
 if screened_by == "Martha":
     output_file += "-m"

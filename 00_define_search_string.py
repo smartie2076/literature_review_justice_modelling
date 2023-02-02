@@ -1,6 +1,6 @@
 import pandas as pd
 
-file_name = "./2022-02-25-Keywords-Literature-Review-Paper-Idea.xlsx"
+file_name = "2022-02-Paper-Idea-And-Keywords/2022-02-25-Keywords-Literature-Review-Paper-Idea.xlsx"
 
 
 def join(tab, conjunction):
@@ -27,7 +27,7 @@ search_string = f"{string_and} AND ({string_or_people}) AND ({string_or_justice}
 
 print(search_string)
 
-text_file = open("./search_string.txt", "w")
+text_file = open("2022-02-Paper-Idea-And-Keywords/search_string.txt", "w")
 
 # write string to file
 text_file.write(search_string)

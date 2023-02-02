@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
-file = "2022-07-19-Final-Keywords-Publications-merged-Count.csv"
+file = "2022-07-19-Final-Keywords-Title-Relevance/2022-07-19-Final-Keywords-Publications-merged-Count.csv"
 output_file = file[:-4] + "-votes.csv"
 included_file = output_file[:-4] + "-only-included.csv"
 TITLE = "Article Title"

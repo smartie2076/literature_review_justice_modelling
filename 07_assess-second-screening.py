@@ -1,16 +1,16 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-screened_by = "Martha"
+#screened_by = "Martha"
 # screened_by = "Jonathan"
 
-file = "2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
-output_file = file[:-4] + "-2nd-screening"
-if screened_by == "Martha":
-    output_file += "-m"
-elif screened_by == "Jonathan":
-    output_file += "-j"
-output_file += "-only-included.csv"
+file = "2022-07-19-Final-Keywords-1st-Screening-Jonathan-Martha-Results/2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
+output_file = "2022-01-11-Updated-Votes.csv" #file[:-4] + "-2nd-screening"
+#if screened_by == "Martha":
+#    output_file += "-m"
+#elif screened_by == "Jonathan":
+#    output_file += "-j"
+#output_file += "-only-included.csv"
 
 inclusion_criteria_title_and_abstract = [
     "Does the paper define justice indicators? (0=nope, 1=probably/on the side, 2=yes, 3=exeptional)",

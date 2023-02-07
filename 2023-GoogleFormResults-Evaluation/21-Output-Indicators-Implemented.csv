@@ -1,4 +1,4 @@
-,word,count,DOI
+,parameter,count,doi
 0,regression coefficients,2,"'10.1186/s13705-017-0111-6', '10.3390/ijerph18020620'"
 1,electricity generation per capita,1,'10.1016/j.apenergy.2019.113724'
 2,electricity generation per demand,1,'10.1016/j.apenergy.2019.113724'

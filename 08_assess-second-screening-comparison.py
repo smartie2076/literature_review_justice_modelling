@@ -170,15 +170,15 @@ def get_relevant_papers(
 
     # Include based on max vote ("exceptional" performance for one of the criteria)
     for criteria in inclusion_criteria_title_and_abstract[0:3]:
-        # Maximum reachable points
-        maximum = exceptionality
         criterium_maximum = [
-            data_with_votes_joined.loc[id, criteria + "(sum)"] >= maximum
+            data_with_votes_joined.loc[id, criteria + "(sum)"] >= exceptionality
             for id in data_with_votes_joined.index
         ]
         data_with_votes_joined[INCLUDED_EXCEPTIONAL] += criterium_maximum
-        data_with_votes_joined[INCLUDE] += criterium_maximum
 
+    data_with_votes_joined[INCLUDE] = data_with_votes_joined[INCLUDED_EXCEPTIONAL]
+
+    print(sum(data_with_votes_joined[INCLUDED_EXCEPTIONAL]))
     data_with_votes_joined[INCLUDED_EXCEPTIONAL + SUFFIX_POINTS] = (
         data_with_votes_joined[INCLUDED_EXCEPTIONAL]
         * data_with_votes_joined[TOTAL_POINTS]
@@ -200,7 +200,7 @@ def get_relevant_papers(
         * data_with_votes_joined[INCLUDED_TARGET_VALUE]
     )
 
-    data_with_votes_joined[INCLUDE] = criterium_target_value
+    data_with_votes_joined[INCLUDE] += criterium_target_value
 
     all_relevant_papers_only_double_vote = data_with_votes_joined[INCLUDE]
 
@@ -273,6 +273,7 @@ def get_relevant_papers(
 
     # Only write included papers to file (as we have a boolean column, adding True+True does not result in 2)
     if save is True:
+        data_with_votes_joined.to_csv(output_file + "-all-joined.csv")
 
         data_relevant_papers = data_with_votes_joined[
             data_with_votes_joined[INCLUDE] == True

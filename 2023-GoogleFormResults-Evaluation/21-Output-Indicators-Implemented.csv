@@ -45,7 +45,8 @@
 43,environmental justice (ej) score,1,'10.1016/j.enpol.2019.110935'
 44,disadvantaged communities with 5% of highest pollution/exposure or 25% highest ces score (sensitivity plus exposure) precentage of census tracts with certain ces score (sensitivity plus exposure),1,'10.1016/j.enpol.2019.110935'
 45,annual rate of solar adoption,1,'10.1016/j.enpol.2019.110935'
-46,gap of rate of solar adotion between high- and low-adopters,1,'10.1016/j.enpol.2019.110935'
+46,gap of rate of solar adotion between high- and low-adopters,1,Loss of distributive justice
+
 47,exposure,1,'10.1016/j.ecolecon.2022.107456'
 48,sensitivity,1,'10.1016/j.ecolecon.2022.107456'
 49,energy vulnerability,1,'10.1016/j.ecolecon.2022.107456'

@@ -1,0 +1,27 @@
+,parameter,count,doi
+0,regression coefficients,4,"'10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935',
+ '10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935'"
+1,installed pv capacity per capita,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+2,calenviroscreen (ces) score,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+3,environmental justice (ej) score,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+4,disadvantaged communities with 5% of highest pollution/exposure or 25% highest ces score (sensitivity plus exposure),2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+5,precentage of census tracts with certain ces score (sensitivity plus exposure),2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+6,annual rate of solar adoption,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+7,gap of rate of solar adotion between high- and low-adopters,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+8,correlation indicators between ejindicators and res potential,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+9,population quintiles affected,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+10,neighbourhood asset score (nas),2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+11,neighbourhood deficit score,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+12,energy burden,2,"'10.1016/j.scs.2021.103647', '10.1016/j.scs.2021.103647'"
+13,electricity generation per capita,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+14,electricity generation per demand,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+15,investment share,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+16,regional spillover,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+17,regional equity,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+18,spatial distribution of electricity generation per demand,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+19,gini index,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+20,regression coefficient between energy burden and premature mortality,1,'10.3390/ijerph18020620'
+21,regression coefficient between energy burden and self-reported health,1,'10.3390/ijerph18020620'
+22,regression coefficient between energy burden and life expectancy,1,'10.3390/ijerph18020620'
+23,electricity recovery data,1,'10.1016/j.envsci.2021.04.004'
+24,risk of environmental injustice based on demographic and environmental indicators,1,'10.1016/j.envsci.2021.04.004'

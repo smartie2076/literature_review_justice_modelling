@@ -1,0 +1,43 @@
+,parameter,count,doi
+0,e.g. calculation of energy burden of households groups or gini coefficient;discussion: discussion of the results and their impact on justice aspects in textform.,10,"'10.1016/j.erss.2017.09.035', '10.1186/s13705-017-0111-6',
+ '10.1016/j.enpol.2019.110935', '10.1016/j.scs.2021.103647',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935',
+ '10.1016/j.scs.2021.103647', '10.1016/j.apenergy.2019.113724'"
+1,scenarios: a scenario is a quantitative description of a possible,8,"'10.1016/j.rser.2020.110610', '10.1016/j.erss.2017.09.035',
+ '10.1016/j.enpol.2019.110935', '10.3390/ijerph18020620',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
+2,alternative energy future. compared to a reference or baseline,8,"'10.1016/j.rser.2020.110610', '10.1016/j.erss.2017.09.035',
+ '10.1016/j.enpol.2019.110935', '10.3390/ijerph18020620',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
+3,e.g. calculation of energy burden of households groups or gini coefficient,8,"'10.1016/j.rser.2020.110610', '10.3390/ijerph18020620',
+ '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899',
+ 'https://doi.org/10.1016/j.apenergy.2020.114749',
+ '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899',
+ 'https://doi.org/10.1016/j.apenergy.2020.114749'"
+4,eg. the objective function,6,"'10.1016/j.erss.2017.09.035', '10.1080/13549839.2021.1916899',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1080/13549839.2021.1916899', '10.1016/j.apenergy.2019.113724'"
+5,boundaries,6,"'10.1016/j.erss.2017.09.035', '10.1080/13549839.2021.1916899',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1080/13549839.2021.1916899', '10.1016/j.apenergy.2019.113724'"
+6,constraints.;result processing: “quantitative” analysis of results concerning justice aspects,6,"'10.1016/j.erss.2017.09.035', '10.1080/13549839.2021.1916899',
+ '10.1016/j.apenergy.2019.113724', '10.1016/j.erss.2017.09.035',
+ '10.1080/13549839.2021.1916899', '10.1016/j.apenergy.2019.113724'"
+7,result processing: “quantitative” analysis of results concerning justice aspects,6,"'10.1186/s13705-017-0111-6',
+ 'https://doi.org/10.1016/j.apenergy.2020.114749',
+ '10.1016/j.scs.2021.103647', '10.1186/s13705-017-0111-6',
+ 'https://doi.org/10.1016/j.apenergy.2020.114749',
+ '10.1016/j.scs.2021.103647'"
+8,and is typically used to provide information on how to reach a certain goal.;result processing: “quantitative” analysis of results concerning justice aspects,4,"'10.1016/j.rser.2020.110610', '10.1016/j.enpol.2019.110935',
+ '10.3390/ijerph18020620', '10.1016/j.enpol.2019.110935'"
+9,and is typically used to provide information on how to reach a certain goal.;parameterization: definition of input parameters,4,"'10.1016/j.erss.2017.09.035', '10.1016/j.apenergy.2019.113724',
+ '10.1016/j.erss.2017.09.035', '10.1016/j.apenergy.2019.113724'"
+10,inlcuding pre-processing steps for input data adjustment;simulation/optimization: integration into the simulation/optimization algorithm itself,4,"'10.1016/j.erss.2017.09.035', '10.1016/j.apenergy.2019.113724',
+ '10.1016/j.erss.2017.09.035', '10.1016/j.apenergy.2019.113724'"
+11,parameterization: definition of input parameters,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+12,inlcuding pre-processing steps for input data adjustment;result processing: “quantitative” analysis of results concerning justice aspects,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+13,simulation/optimization: integration into the simulation/optimization algorithm itself,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+14,regression analysis,1,'10.1016/j.envsci.2021.04.004'

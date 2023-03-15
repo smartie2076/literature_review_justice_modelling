@@ -7,7 +7,7 @@ import collections
 
 CREATE_PLOTS = True
 
-FILENAME = "./2023-GoogleFormResults/2023-01-31-Results-2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final"
+FILENAME = "2023-01-31-GoogleFormResults/2023-01-31-Results-2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final"
 CSV = ".csv"
 PNG = ".png"
 
@@ -17,7 +17,7 @@ DOI = "doi"
 RESULT_FOLDER = "2023-GoogleFormResults-Evaluation"
 
 # Columns
-column_file = "./2023-GoogleFormResults/00_googleform_code_2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final"
+column_file = "2023-01-31-GoogleFormResults/00_googleform_code_2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final"
 
 print(column_file)
 

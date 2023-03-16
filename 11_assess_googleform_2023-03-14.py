@@ -7,6 +7,7 @@ import collections
 
 CREATE_PLOTS = True
 PRINT_RESULT_SNIPPETS = False
+np.set_printoptions(linewidth=100000) # Export processed data without linebreaks in csv
 
 FILENAME = "2023-03-14-GoogleFormResults/2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final-2023-03-14"
 CSV = ".csv"
@@ -142,6 +143,14 @@ df_answers_doi = get_all_answers_with_doi(results[results[columns[48]] == "Yes"]
 assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Input-Factors-Implemented")
 print("\n")
 
+# Assess used input factors only for spatial papers
+assessed_column = 54
+print (f"Assessing column '{columns[assessed_column]}' (spatial)")
+# Only get answers where a model is directly applied
+df_answers_doi = get_all_answers_with_doi(spatial_papers[spatial_papers[columns[48]] == "Yes"], column_number=assessed_column)
+assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Input-Factors-Implemented-Spatial")
+print("\n")
+
 # Assess margin between suggested and used input factors:
 # I think this should be based on results[results[columns[48]==Yes]]. Papers with relevant content should be evaulated seperatrely.
 print (f"Assessing input factors not implemented in models")
@@ -199,7 +208,7 @@ def assessing_all_implemented_output_indicators(results, result_key=""):
     assessed_column = 66
     print (f"Assessing column '{columns[assessed_column]}'")
     df_answers_doi = get_all_answers_with_doi(results[results[columns[48]] == "Yes"], column_number=assessed_column)
-    assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods-Not-Specified-Module-{result_selection_suffix}")
+    assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods-Not-Specified-Module{result_selection_suffix}")
     print("\n")
 
 assessing_all_implemented_output_indicators(results)

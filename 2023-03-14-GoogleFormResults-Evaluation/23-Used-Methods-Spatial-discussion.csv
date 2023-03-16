@@ -1,6 +1,5 @@
 ,parameter,count,doi
-0,spatial mapping,4,"'10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724',
- '10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
+0,spatial mapping,4,"'10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724', '10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
 1,spatial mapping of regression coefficients,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
 2,correlation matrix,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
 3,bivariate log-linear scatter plots,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"

@@ -1,0 +1,118 @@
+,parameter,count,doi
+0,unemployment,6,"'10.1016/j.enpol.2019.110935', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899', '10.1016/j.enpol.2019.110935', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899'"
+1,energy burden,5,"'10.3390/ijerph18020620', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899'"
+2,housing burden,4,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+3,poverty,4,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+4,ozone concentration,4,"'10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899'"
+5,traffic proximity and volume,4,"'10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899', '10.1016/j.ref.2022.02.002', '10.1080/13549839.2021.1916899'"
+6,households energy efficiency,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+7, fuel costs,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+8,property size,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+9,number of people,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+10,after housing cost,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+11,fuel mix,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+12,national income threshold,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+13,fuel cost threshold,2,"'10.1016/j.erss.2017.09.035', '10.1016/j.erss.2017.09.035'"
+14,number of registered domestic biogas digesters,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
+15,distance to nearest district headquarters,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
+16,share of population made up of women,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
+17,share of population categorised as marginalised,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
+18,share of households with no household appliances,2,"'10.1186/s13705-017-0111-6', '10.1186/s13705-017-0111-6'"
+19,total number of pv installations,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+20,total installed capacity,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+21,educational attainment,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+22,linguistic isolation,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+23,asthma emergency room visits,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+24,cardiovascular disease emergency room visits,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+25,percent low birthweight births,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+26,ozone concentrations,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+27,pm2.5 concentrations,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+28,diesel pm emissions,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+29,drinking water contamination,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+30,pesticide use,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+31,toxic releases,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+32,traffic density,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+33,cleanup sites,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+34,groundwater threats,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+35,hazardous waste,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+36,impaired water bodies,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+37,solid waste sites,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+38,median household income for each census tract,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+39,solar irradiance,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+40,median household income,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+41,electricity rates,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+42,percentage of disadvantaged communities per area,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+43,pv installations over time,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+44,population density,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+45,housing costs,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+46,geospatial granularity,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
+47,less than high school education,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+48,low-income,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+49,minority,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+50,air toxics cancer risk,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+51,air toxics respiratory hazard index,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+52,diesel particulate matter (pm),2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+53,pm2.5 concentration,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+54,lead paint indicator,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+55,proximity to risk management plan facilities,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+56,proximity to treatment/storage/disposal facilities,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+57,proximity to national priorities list sites,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+58,wastewater discharge indicator,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+59, employment in mining/quarrying/o&g extraction,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+60,farming-dependent counties,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+61,persistent-poverty counties,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+62,rural-urban continuum code,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+63,technical generation potential for pv and wind,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+64,levelized cost of energy for pv/wind/geothermal/hydropower,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+65,capital cost for geothermal/hydropower,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+66,utility service area,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+67,cost savings estimates for solar-plus-storage,2,"'10.1016/j.ref.2022.02.002', '10.1016/j.ref.2022.02.002'"
+68,diesel particulate matter,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+69,ozone,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+70,particulate matter (pm2.5),2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+71,asthma hospitalisations,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+72,high school education,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+73,households with no vehicle,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+74,energy poverty,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+75,basic energy needs,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+76,number of schools,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+77,number of hospitals,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+78,grocery stores,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+79,number of libraries,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+80,number of churches,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+81,community centres,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+82,parky,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+83,light rails transit stops,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+84,percent poverty,2,"'10.1080/13549839.2021.1916899', '10.1080/13549839.2021.1916899'"
+85,urban and rural population,2,"'https://doi.org/10.1016/j.apenergy.2020.114749', 'https://doi.org/10.1016/j.apenergy.2020.114749'"
+86,price modifications using equity and equality principles,2,"'https://doi.org/10.1016/j.apenergy.2020.114749', 'https://doi.org/10.1016/j.apenergy.2020.114749'"
+87,capacity requirements,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+88,slack to least-cost solution,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+89,employent numbers,1,'10.1016/j.rser.2020.110610'
+90,working-age,1,'10.1016/j.rser.2020.110610'
+91,employment factor ,1,'10.1016/j.rser.2020.110610'
+92,age-adjusted premature mortality,1,'10.3390/ijerph18020620'
+93,self-reported health,1,'10.3390/ijerph18020620'
+94,life expectancy,1,'10.3390/ijerph18020620'
+95,social capital,1,'10.3390/ijerph18020620'
+96,environmental quality,1,'10.3390/ijerph18020620'
+97,pm2.5 or particulate matter,1,'10.3390/ijerph18020620'
+98,income inequality,1,'10.3390/ijerph18020620'
+99,inadequate housing,1,'10.3390/ijerph18020620'
+100,overcrowded housing,1,'10.3390/ijerph18020620'
+101,housing without kitchen or plumbing,1,'10.3390/ijerph18020620'
+102,number of associations per capita,1,'10.3390/ijerph18020620'
+103,voter turnout,1,'10.3390/ijerph18020620'
+104,non-profit organisations without international focus,1,'10.3390/ijerph18020620'
+105,percent of non-hispanic back,1,'10.3390/ijerph18020620'
+106,healthy food access,1,'10.3390/ijerph18020620'
+107,access to physicians,1,'10.3390/ijerph18020620'
+108,education,1,'10.3390/ijerph18020620'
+109,area median income (ami),1,'10.3390/ijerph18020620'
+110,percentage of low- to medium income households,1,'10.3390/ijerph18020620'
+111,percent of non-white (percent of population in the municipality that is nonwhite),1,'10.1016/j.envsci.2021.04.004'
+112,income (median household income value),1,'10.1016/j.envsci.2021.04.004'
+113,linguistic isolation (percent of population living in a household where all members age 14+ speak a non-english language and also speak english less than “very well”),1,'10.1016/j.envsci.2021.04.004'
+114,education (percent of population age 25+ who did not receive a high school diploma or the equivalent),1,'10.1016/j.envsci.2021.04.004'
+115,youth in poverty (percent of population under the age of 5 living below the federal poverty level),1,'10.1016/j.envsci.2021.04.004'
+116,elderly in poverty (percent of population over the age of 64 living below the federal poverty level),1,'10.1016/j.envsci.2021.04.004'

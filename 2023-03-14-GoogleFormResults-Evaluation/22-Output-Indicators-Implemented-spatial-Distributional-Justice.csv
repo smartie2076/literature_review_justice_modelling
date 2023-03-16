@@ -1,6 +1,5 @@
 ,parameter,count,doi
-0,regression coefficients,4,"'10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935',
- '10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935'"
+0,regression coefficients,4,"'10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935', '10.1186/s13705-017-0111-6', '10.1016/j.enpol.2019.110935'"
 1,installed pv capacity per capita,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
 2,calenviroscreen (ces) score,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
 3,environmental justice (ej) score,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"

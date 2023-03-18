@@ -102,6 +102,7 @@ print(f"Number of papers that apply numeric model: {len(results[results[columns[
 
 # Create a seperate pd.Dataframe only with the Spatial Papers
 spatial_papers = pd.concat([results[results[columns[3]].str.contains('atial')], results[results[columns[14]].str.contains('ATIAL')]], ignore_index = True).drop_duplicates().reset_index(drop=True)
+spatial_papers.to_csv(RESULT_FOLDER+"/"+"only-spatial-papers.csv")
 print(f"Number of spatial papers: {len(spatial_papers.index)}")
 print(f"Number of spatial papers that apply numeric model: {len(spatial_papers[spatial_papers[columns[48]] == 'Yes'].index)}")
 print(f"\n")

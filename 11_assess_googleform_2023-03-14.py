@@ -9,7 +9,7 @@ CREATE_PLOTS = True
 PRINT_RESULT_SNIPPETS = False
 np.set_printoptions(linewidth=100000) # Export processed data without linebreaks in csv
 
-FILENAME = "2023-03-14-GoogleFormResults/2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final-2023-03-14"
+FILENAME = "2023-03-14-GoogleFormResults/2022-11-23-Survery-Literature-Review-Justice-in-Modelling-Final-2023-03-17"
 CSV = ".csv"
 PNG = ".png"
 
@@ -29,6 +29,7 @@ results = pd.read_csv(FILENAME + CSV)
 def get_all_answers_with_doi (results, column_number):
     list_of_answers = []
     list_of_doi = []
+
     for paper in results.index:
         if pd.isna(results[columns[column_number]][paper]) is False and len(results[columns[column_number]][paper]) > 1:
             answer_string = results[columns[column_number]][paper] + ", "
@@ -49,7 +50,6 @@ def get_list_of_factors_not_implemented (results, column_number_suggested, colum
                       list_implemented_answers_and_doi],
         DOI: [df_suggested_answes_and_doi[DOI][i] for i in df_suggested_answes_and_doi.index if df_suggested_answes_and_doi[PARAMETER][i] not in list_implemented_answers_and_doi]
     })
-
     return df_not_implemented_parameters # margin
 
 import numpy as np
@@ -60,6 +60,7 @@ def assess_number_of_mentions(df_answers_with_doi, name, number_of_mentions=1):
     if CREATE_PLOTS is True and len(count_of_answers[count_of_answers["count"]>1])>number_of_mentions:
         count_of_answers[count_of_answers["count"]>number_of_mentions].plot.barh(x=PARAMETER, y="count")
         plt.savefig(RESULT_FOLDER+"/"+name+PNG)
+        plt.close()
 
     # Retrieve all DOIs where word occurs
     count_of_answers[DOI] = [
@@ -100,7 +101,7 @@ print(f"Number of evaluated papers: {len(results.index)}")
 print(f"Number of papers that apply numeric model: {len(results[results[columns[48]] == 'Yes'].index)}")
 
 # Create a seperate pd.Dataframe only with the Spatial Papers
-spatial_papers = pd.concat([results[results[columns[3]].str.contains('atial')], results[results[columns[14]].str.contains('ATIAL')]], ignore_index = True)
+spatial_papers = pd.concat([results[results[columns[3]].str.contains('atial')], results[results[columns[14]].str.contains('ATIAL')]], ignore_index = True).drop_duplicates().reset_index(drop=True)
 print(f"Number of spatial papers: {len(spatial_papers.index)}")
 print(f"Number of spatial papers that apply numeric model: {len(spatial_papers[spatial_papers[columns[48]] == 'Yes'].index)}")
 print(f"\n")

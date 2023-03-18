@@ -1,10 +1,10 @@
 ,parameter,count,doi
 0,spatial mapping,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
-1,spatial mapping of regression coefficients,1,'10.1186/s13705-017-0111-6'
-2,correlation matrix,1,'10.1016/j.enpol.2019.110935'
-3,bivariate log-linear scatter plots,1,'10.1016/j.enpol.2019.110935'
-4,before-and-after assessment,1,'10.1016/j.ecolecon.2022.107456'
-5,change in distributive justice,1,'10.1016/j.ecolecon.2022.107456'
-6,change in energy vulnerability,1,'10.1016/j.ecolecon.2022.107456'
-7,spatial vizualization,1,'10.1016/j.scs.2021.103647'
-8,plot of near-optimal scenarios and decision variables,1,'10.1016/j.apenergy.2019.113724'
+1,correlation matrix,1,'10.1016/j.enpol.2019.110935'
+2,bivariate log-linear scatter plots,1,'10.1016/j.enpol.2019.110935'
+3,spatial vizualization,1,'10.1016/j.scs.2021.103647'
+4,plot of near-optimal scenarios and decision variables,1,'10.1016/j.apenergy.2019.113724'
+5,spatial mapping of regression coefficients,1,'10.1186/s13705-017-0111-6'
+6,before-and-after assessment,1,'10.1016/j.ecolecon.2022.107456'
+7,change in distributive justice,1,'10.1016/j.ecolecon.2022.107456'
+8,change in energy vulnerability,1,'10.1016/j.ecolecon.2022.107456'

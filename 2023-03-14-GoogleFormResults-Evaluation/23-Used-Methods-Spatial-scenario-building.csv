@@ -1,4 +1,6 @@
 ,parameter,count,doi
-0,identify disadvantaged communities by ces-score,2,"'10.1016/j.enpol.2019.110935', '10.1016/j.enpol.2019.110935'"
-1,policy as constraints,2,"'10.1016/j.apenergy.2019.113724', '10.1016/j.apenergy.2019.113724'"
+0,identify disadvantaged communities by ces-score,1,'10.1016/j.enpol.2019.110935'
+1,policy as constraints,1,'10.1016/j.apenergy.2019.113724'
 2,state fixed effect approach,1,'10.3390/ijerph18020620'
+3,scenario discovery experiment (pynetlogo),1,'10.1016/j.enpol.2021.112265'
+4,brainstorming possible scenarios leading to value change,1,'10.1016/j.enpol.2021.112265'

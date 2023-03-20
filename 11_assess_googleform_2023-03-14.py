@@ -206,13 +206,6 @@ def assessing_all_implemented_output_indicators(results, result_key=""):
     assess_number_of_mentions(df_answers_doi, name=f"{columns[46][:2]}-Output-Indicators-Not-Implemented{result_selection_suffix}")
     print("\n")
 
-    # Assess mentioned methods factors that are not connected to the different modelling steps:
-    assessed_column = 66
-    print (f"Assessing column '{columns[assessed_column]}'")
-    df_answers_doi = get_all_answers_with_doi(results[results[columns[48]] == "Yes"], column_number=assessed_column)
-    assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods-Not-Specified-Module{result_selection_suffix}")
-    print("\n")
-
 assessing_all_implemented_output_indicators(results)
 assessing_all_implemented_output_indicators(spatial_papers, result_key="spatial")
 
@@ -234,11 +227,11 @@ def get_methods_used_in_modelling_steps(result_selection, result_key=""):
         assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods{result_selection_suffix}-{key}")
         print("\n")
 
-# Assess mentioned methods factors that are not connected to the different modelling steps:
-assessed_column = 66
+# Assess mentioned methods that are not connected to the different modelling steps:
+assessed_column = 50
 print (f"Assessing column '{columns[assessed_column]}'")
 df_answers_doi = get_all_answers_with_doi(results[results[columns[48]] == "Yes"], column_number=assessed_column)
-assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods")
+assess_number_of_mentions(df_answers_doi, name=f"{columns[assessed_column][:2]}-Used-Methods-Not-Defined-Step")
 print("\n")
 
 # Assess used methods indicators for all evaluated papers that use a numeric model

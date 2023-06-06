@@ -6,9 +6,7 @@ TOTAL_POINTS = "Total of 2nd Screening Points"
 target_value = 13  # At least two points in each
 exceptionality = 6  # min 5, ie. one of two voted exceptionality
 
-file_core = (
-    "2022-07-19-Final-Keywords-1st-Screening-Jonathan-Martha-Evaluation/2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
-)
+file_core = "2022-07-19-Final-Keywords-1st-Screening-Jonathan-Martha-Evaluation/2022-07-19-Final-Keywords-Publications-merged-Count-votes-only-included.csv"
 output_file = file_core[:-4] + "-2nd-screening"
 
 files = [output_file + "-m.csv", output_file + "-j.csv"]
@@ -24,7 +22,7 @@ inclusion_criteria_title_and_abstract = [
     "Paper is included based on the veto above, but is only relevant for the backgroud section.",
     "Discussion/2nd opinion necessary.",
 ]
-'''
+"""
 # Read from file and drop all without a vote in the relevant criteria
 data_with_votes_m = pd.read_csv(files[0])
 data_with_votes_m.dropna(
@@ -43,11 +41,12 @@ data_with_votes_joined = data_with_votes_m.merge(data_with_votes_j, how="left")
 #    subset=[inclusion_criteria_title_and_abstract[i] + "(M)" for i in range(0, 3)]
 #    + [inclusion_criteria_title_and_abstract[i] + "(J)" for i in range(0, 3)]
 #)
-'''
+"""
 file_core = "2023-01-3rd-Screening-Paper-Screening/2023-01-24-Relevant-Papers-All-Data-Revoted.csv"
 output_file = file_core[:-4] + "_3rd_screening"
 data_with_votes_joined = pd.read_csv(file_core)
 to_be_assessed = len(data_with_votes_joined)
+
 
 def title_multirow(text):
     letters_in_line = 60
@@ -223,14 +222,16 @@ def get_relevant_papers(
     data_with_votes_joined["Double_veto"] = [
         vetoes_martha[i] * vetoes_jonathan[i] for i in range(0, len(vetoes_jonathan))
     ]
-    #(len(vetoes_jonathan), len(data_with_votes_joined[INCLUDED_EXCEPTIONAL].values))
-    #print(data_with_votes_joined[INCLUDED_EXCEPTIONAL].index.values)
-    #print(data_with_votes_m.iloc[139])
+    # (len(vetoes_jonathan), len(data_with_votes_joined[INCLUDED_EXCEPTIONAL].values))
+    # print(data_with_votes_joined[INCLUDED_EXCEPTIONAL].index.values)
+    # print(data_with_votes_m.iloc[139])
     data_with_votes_joined[INCLUDED_DOUBLE_VETO] = [
-        (data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] is False
-        and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] is False
-        and vetoes_martha[i] is True
-        and vetoes_jonathan[i] is True)
+        (
+            data_with_votes_joined.loc[i, INCLUDED_EXCEPTIONAL] is False
+            and data_with_votes_joined.loc[i, INCLUDED_TARGET_VALUE] is False
+            and vetoes_martha[i] is True
+            and vetoes_jonathan[i] is True
+        )
         for i in range(0, len(vetoes_jonathan))
     ]
     data_with_votes_joined["Double_veto" + SUFFIX_POINTS] = (
@@ -329,6 +330,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import collections
 
+
 def plot_wordcloud(title, text):
     # Compare also: https://www.python-lernen.de/wordcloud-erstellen-python.htm
     # STOPWORDS.update(liste_der_unerwuenschten_woerter), now manually removed from string
@@ -340,12 +342,13 @@ def plot_wordcloud(title, text):
     plt.axis("off")
     plt.title(title)
     wordcloud_name = (
-            "./" + output_file + "_wordcloud_" + title.replace(" ", "_") + ".png"
+        "./" + output_file + "_wordcloud_" + title.replace(" ", "_") + ".png"
     )
     print(wordcloud_name)
     plt.savefig(wordcloud_name)
     plt.close()
     return
+
 
 def get_inclusion_kinds(
     relevant_papers,
@@ -356,7 +359,6 @@ def get_inclusion_kinds(
     INCLUDED_DOUBLE_VETO,
     INCLUDED_SINGLE_VETO,
 ):
-
     ###   Plot distribution of reason for relevance relative to total points archieved ###
 
     point_count = pd.DataFrame()

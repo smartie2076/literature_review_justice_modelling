@@ -99,7 +99,6 @@ def bold_keys(string):
 def paper_author_year_title_abstract(data, paper_id, title, displayed_paper_info):
     # Display paper info on screen
     if displayed_paper_info is False:
-
         print(f"\n {paper_id}. {data[AUTHORS][paper_id]} ({data[YEAR][paper_id]})\n")
         print(f"{bold_keys(str(data[TITLE][paper_id]))}\n")
         if title is False:

@@ -1,0 +1,26 @@
+,storybuilding-narrative,storybuilding-narrative,storybuilding-narrative,scenario-building,scenario-building,scenario-building,parameterization,parameterization,parameterization,simulation-optimization,simulation-optimization,simulation-optimization,result-processing,result-processing,result-processing,discussion,discussion,discussion
+,parameter,count,doi,parameter,count,doi,parameter,count,doi,parameter,count,doi,parameter,count,doi,parameter,count,doi
+0,agent-based model (abm) to identify conflicts,1.0,'10.1016/j.enpol.2021.112265',identify disadvantaged communities by ces-score,1.0,'10.1016/j.enpol.2019.110935',data preparation by aggregation though national quinitiles,1.0,'10.1016/j.ref.2022.02.002',expanse (exploration of patterns in near-optimal energy scenarios),1.0,'10.1016/j.apenergy.2019.113724',simple linear regression,1.0,'10.1016/j.enpol.2019.110935', spatial mapping,2.0,"'10.1016/j.enpol.2019.110935', '10.1016/j.apenergy.2019.113724'"
+1, expert interviews,1.0,'10.1016/j.enpol.2021.112265',policy as constraints,1.0,'10.1016/j.apenergy.2019.113724', forth- and fith-quintile proportion,1.0,'10.1016/j.ref.2022.02.002', modeling to generate alternatives (mga) method,1.0,'10.1016/j.apenergy.2019.113724', ordinary least squares (ols) multiple regression model,1.0,'10.1016/j.enpol.2019.110935',correlation matrix,1.0,'10.1016/j.enpol.2019.110935'
+2,,,,state fixed effect approach,1.0,'10.3390/ijerph18020620', weighted sum,1.0,'10.1016/j.ref.2022.02.002', slack compared to least-cost,1.0,'10.1016/j.apenergy.2019.113724', normalization of overall pollution scores to determine locally specific exposure tiers,1.0,'10.1016/j.enpol.2019.110935', bivariate log-linear scatter plots,1.0,'10.1016/j.enpol.2019.110935'
+3,,,,scenario discovery experiment (pynetlogo),1.0,'10.1016/j.enpol.2021.112265',spatial resolution,1.0,'10.1016/j.apenergy.2019.113724', pareto frontier,1.0,'10.1016/j.apenergy.2019.113724',exploratory correlational analyses,1.0,'10.1016/j.ref.2022.02.002',spatial vizualization,1.0,'10.1016/j.scs.2021.103647'
+4,,,, brainstorming possible scenarios leading to value change,1.0,'10.1016/j.enpol.2021.112265', spatial constraints,1.0,'10.1016/j.apenergy.2019.113724', near-optimal scenarios,1.0,'10.1016/j.apenergy.2019.113724',scenarios equality and equity price modifications ,1.0,'10.1016/j.apenergy.2020.114749',plot of near-optimal scenarios and decision variables,1.0,'10.1016/j.apenergy.2019.113724'
+5,,,,,,,,,, policies as constraints,1.0,'10.1016/j.apenergy.2019.113724',regressional analyis,1.0,'10.1016/j.scs.2021.103647',spatial mapping of regression coefficients,1.0,'10.1186/s13705-017-0111-6'
+6,,,,,,,,,, spatial constraints (maximal regional equity by population vs. demand),1.0,'10.1016/j.apenergy.2019.113724',gini index,1.0,'10.1016/j.apenergy.2019.113724',,,
+7,,,,,,,,,,arcgis (two-mile radius),1.0,'10.1080/13549839.2021.1916899', lorenz curve,1.0,'10.1016/j.apenergy.2019.113724',,,
+8,,,,,,,,,,,,, trade-off curve,1.0,'10.1016/j.apenergy.2019.113724',,,
+9,,,,,,,,,,,,,spatial-statistical analysis,1.0,'10.1186/s13705-017-0111-6',,,
+10,,,,,,,,,,,,, least squares regression model,1.0,'10.1186/s13705-017-0111-6',,,
+11,,,,,,,,,,,,, ols regresseion model,1.0,'10.1186/s13705-017-0111-6',,,
+12,,,,,,,,,,,,, geographically weighted regression (gwr) model,1.0,'10.1186/s13705-017-0111-6',,,
+13,,,,,,,,,,,,,spatial error regression model,1.0,'10.3390/ijerph18020620',,,
+14,,,,,,,,,,,,, ols model,1.0,'10.3390/ijerph18020620',,,
+15,,,,,,,,,,,,,"""odd + d (overview",1.0,'10.1016/j.enpol.2021.112265',,,
+16,,,,,,,,,,,,," design concepts and details + decision) model""",1.0,'10.1016/j.enpol.2021.112265',,,
+17,,,,,,,,,,,,,normalisation method,1.0,'10.1080/13549839.2021.1916899',,,
+18,,,,,,,,,,,,, ordinary least squares (ols) regression,1.0,'10.1080/13549839.2021.1916899',,,
+19,,,,,,,,,,,,, descriptive statistics and bivariate correlations,1.0,'10.1080/13549839.2021.1916899',,,
+20,,,,,,,,,,,,, geographic maps,1.0,'10.1080/13549839.2021.1916899',,,
+21,,,,,,,,,,,,, regression analyses,1.0,'10.1080/13549839.2021.1916899',,,
+22,,,,,,,,,,,,, spatial autororrelation,1.0,'10.1080/13549839.2021.1916899',,,
+23,,,,,,,,,,,,,,,,,,

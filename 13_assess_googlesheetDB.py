@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import os, shutil
 import matplotlib.pyplot as plt
 import F13_assess_googlesheetDB_functions as f
 import C13_assess_googlesheetDB as C
@@ -18,24 +19,28 @@ print(papers.head())
 if C.RETRIEVE_METADATA is True:
     papers = f.add_metadata_based_on_C.DOI(papers, "C.DOI")
     papers.to_C.CSV(C.FILENAME_PAPERS+"_with_metadata.C.CSV")
-def evaluate_papers(paper_selection, file_prefix):
+def evaluate_papers(paper_selection, group_folder):
+    path_group = C.path_base + "/" + group_folder
+    if os.path.isdir(path_group):
+        shutil.rmtree(path_group)
+    os.mkdir(path_group)
     # Evaluate single fields
     if C.RETRIEVE_METADATA is True:
-        f.column_count_plot_store(paper_selection, C.path_base, keyword="year", file_prefix=file_prefix)
-        f.column_count_plot_store(paper_selection, C.path_base, keyword="journal", file_prefix=file_prefix)
+        f.column_count_plot_store(paper_selection, path_group, keyword="year")
+        f.column_count_plot_store(paper_selection, path_group, keyword="journal")
 
-    f.column_count_plot_store(paper_selection, C.path_base, keyword="Country", file_prefix=file_prefix)
-    f.column_count_plot_store(paper_selection, C.path_base, keyword="List of applied methods", file_prefix=file_prefix)
+    f.column_count_plot_store(paper_selection, path_group, keyword="Country")
+    f.column_count_plot_store(paper_selection, path_group, keyword="List of applied methods")
 
     # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
-    db_further_reading = f.column_count_plot_store(paper_selection, C.path_base, keyword="Relevant cited papers", file_prefix=file_prefix)
+    db_further_reading = f.column_count_plot_store(paper_selection, path_group, keyword="Relevant cited papers")
     if C.RETRIEVE_METADATA is True:
         db_further_reading = f.add_metadata_based_on_C.DOI(db_further_reading, "Relevant cited papers")
-        db_further_reading.to_C.CSV(C.path_base+f"/{file_prefix}further_reading_list.C.CSV")
+        db_further_reading.to_C.CSV(path_group+f"/further_reading_list.C.CSV")
 
     # Evaluate Keywords
-    keywords = f.column_count_plot_store(paper_selection, C.path_base, keyword="Author-defined keywords", file_prefix=file_prefix)
-    f.plot_wordcloud(C.path_base, "Author-defined Keywords", ', '.join(keywords["Author-defined keywords"].values), file_prefix)
+    keywords = f.column_count_plot_store(paper_selection, path_group, keyword="Author-defined keywords")
+    f.plot_wordcloud(path_group, "Author-defined Keywords", ', '.join(keywords["Author-defined keywords"].values))
 
     # Justice definition
     dropdown_list_choices = C.definitions_justice # single-choice input
@@ -44,19 +49,19 @@ def evaluate_papers(paper_selection, file_prefix):
 
     # ... and geographical scale
     single_choice_list = ["Global","Continent/Union","Country-level","State/Region","City/municipality","Community","Households"]
-    f.combine_dropdown_and_true_false(paper_selection, C.path_base, filename + "geoscale", dropdown_list_name, dropdown_list_choices, single_choice_list, file_prefix)
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "geoscale", dropdown_list_name, dropdown_list_choices, single_choice_list)
     # ... and time scale
     single_choice_list = ["Past", "Present", "Near future", "Far future"]
-    f.combine_dropdown_and_true_false(paper_selection, C.path_base, filename + "timescale", dropdown_list_name, dropdown_list_choices, single_choice_list, file_prefix)
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "timescale", dropdown_list_name, dropdown_list_choices, single_choice_list)
     # ... and sectors
     single_choice_list = ["Electricity","Heating","Cooling","Buildings","Industry","Mobility and Transport"]
-    f.combine_dropdown_and_true_false(paper_selection, C.path_base, filename + "sectors", dropdown_list_name, dropdown_list_choices, single_choice_list, file_prefix)
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "sectors", dropdown_list_name, dropdown_list_choices, single_choice_list)
     # ... and energy topics
     single_choice_list = ["Demand Assessment","Energy System Planning","Sector Coupling","Flexibility","Energy Access","Sufficiency","Policy","Technology-Specific","Digitalization","CO2 Emissions","Planetary ressources"]
-    f.combine_dropdown_and_true_false(paper_selection, C.path_base, filename + "energy_topic", dropdown_list_name, dropdown_list_choices, single_choice_list, file_prefix)
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "energy_topic", dropdown_list_name, dropdown_list_choices, single_choice_list)
     # ... and model types
     single_choice_list = ["Correlation and Regession","Formulaic Calculation","Energy System Model","Integrated Assessment Model","Agent-based modeling","Macro-Economic Model"]
-    f.combine_dropdown_and_true_false(paper_selection, C.path_base, filename + "model_type", dropdown_list_name, dropdown_list_choices, single_choice_list, file_prefix)
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "model_type", dropdown_list_name, dropdown_list_choices, single_choice_list)
 
 
 single_choice_list = ["Correlation and Regession", "Formulaic Calculation", "Energy System Model",
@@ -71,7 +76,7 @@ paper_groups = {
 
 for group in paper_groups.keys():
     print(f"Paper group {group} covers {len(paper_groups[group].index)} papers.")
-    evaluate_papers(paper_groups[group], file_prefix=group)
+    evaluate_papers(paper_groups[group], group_folder=group)
 
 ############################
 # Only Evaluate Indicators #
@@ -83,7 +88,7 @@ print(f"Number of identified indicators: {len(indicators.index)}")
 print(f"Columns: {indicators.columns.tolist()}")
 print(indicators.head())
 
-f.column_count_plot_store(indicators, C.path_base, keyword="Indicator", file_prefix="")
+f.column_count_plot_store(indicators, C.path_base, keyword="Indicator")
 
 # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
 if C.RETRIEVE_METADATA is True:

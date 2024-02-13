@@ -24,7 +24,7 @@ def get_list_from_list_of_str(list_of_str, sep=","):
             list_of_answers += phrases_seperated_by_comma
 
     return list_of_answers
-def plot_wordcloud(path_base, title, text, file_prefix):
+def plot_wordcloud(path_base, title, text):
     # Compare also: https://www.python-lernen.de/wordcloud-erstellen-python.htm
     # STOPWORDS.update(liste_der_unerwuenschten_woerter), now manually removed from string
     wordcloud = WordCloud(
@@ -35,7 +35,7 @@ def plot_wordcloud(path_base, title, text, file_prefix):
     plt.axis("off")
     plt.title(title)
     wordcloud_name = (
-        path_base + "/" + file_prefix + "Wordcloud_" + title.replace(" ", "_") + ".png"
+        path_base + "/" + "Wordcloud_" + title.replace(" ", "_") + ".png"
     )
     print(wordcloud_name)
     plt.savefig(wordcloud_name)
@@ -57,7 +57,7 @@ def add_metadata_based_on_doi(df, column_doi):
 
     return df
 
-def column_count_plot_store(df, path_base, keyword, file_prefix):
+def column_count_plot_store(df, path_base, keyword):
     list = get_list_from_list_of_str(df[keyword].values.tolist())
     if keyword == "Relevant cited papers":
         list = [i.replace(" ", "") for i in list]
@@ -66,13 +66,13 @@ def column_count_plot_store(df, path_base, keyword, file_prefix):
     print(f"In total, {len(df.index)} {keyword} items are collected.")
     df.to_csv(path_base + f"/{keyword}.csv")
     df.plot(x=keyword, y="count", kind="bar")
-    plt.savefig(path_base + f"/{file_prefix}{keyword}.png", bbox_inches="tight")
+    plt.savefig(path_base + f"/{keyword}.png", bbox_inches="tight")
     plt.close()
     return df
 
 
 def combine_dropdown_and_true_false(db, path_base, filename, dropdown_list_name, dropdown_list_choices,
-                                    single_choice_list, file_prefix):
+                                    single_choice_list):
     df = pd.DataFrame(index=single_choice_list, columns=dropdown_list_choices)
     for dropdown_choice in df.columns:
         for single_choice in df.index:
@@ -80,5 +80,5 @@ def combine_dropdown_and_true_false(db, path_base, filename, dropdown_list_name,
                 db[db[dropdown_list_name] == dropdown_choice][db[single_choice] == 1].index)
 
     df.plot(kind="bar", stacked=True)
-    plt.savefig(path_base + "/" + file_prefix + filename + ".png", bbox_inches="tight")
+    plt.savefig(path_base + "/" + filename + ".png", bbox_inches="tight")
     plt.close()

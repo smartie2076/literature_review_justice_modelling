@@ -77,7 +77,7 @@ def combine_dropdown_and_true_false(db, path_base, filename, dropdown_list_name,
     for dropdown_choice in df.columns:
         for single_choice in df.index:
             df.loc[single_choice, dropdown_choice] = len(
-                db[db[dropdown_list_name] == dropdown_choice][db[single_choice] == 1].index)
+                db.loc[db[dropdown_list_name] == dropdown_choice].loc[db[single_choice] == 1].index)
 
     df.plot(kind="bar", stacked=True)
     plt.savefig(path_base + "/" + filename + ".png", bbox_inches="tight")

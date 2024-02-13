@@ -67,7 +67,7 @@ def evaluate_papers(paper_selection, group_folder):
 single_choice_list = ["Correlation and Regession", "Formulaic Calculation", "Energy System Model",
                       "Integrated Assessment Model", "Agent-based modeling", "Macro-Economic Model"]
 
-exclude_regressions = papers[papers["Correlation and Regession"]==1][papers["Formulaic Calculation"]==0][papers["Energy System Model"]==0][papers["Integrated Assessment Model"]==0][papers["Agent-based modeling"]==0][papers["Macro-Economic Model"]==0]
+exclude_regressions = papers.loc[papers["Correlation and Regession"]==1].loc[papers["Formulaic Calculation"]==0].loc[papers["Energy System Model"]==0].loc[papers["Integrated Assessment Model"]==0].loc[papers["Agent-based modeling"]==0].loc[papers["Macro-Economic Model"]==0]
 
 paper_groups = {
     "All": papers,

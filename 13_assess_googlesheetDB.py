@@ -17,8 +17,8 @@ print(papers.head())
 
 # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
 if C.RETRIEVE_METADATA is True:
-    papers = f.add_metadata_based_on_C.DOI(papers, "C.DOI")
-    papers.to_C.CSV(C.FILENAME_PAPERS+"_with_metadata.C.CSV")
+    papers = f.add_metadata_based_on_doi(papers, C.DOI)
+    papers.to_csv(C.FILENAME_PAPERS+"_with_metadata.CSV")
 def evaluate_papers(paper_selection, group_folder):
     path_group = C.path_base + "/" + group_folder
     if os.path.isdir(path_group):
@@ -35,7 +35,7 @@ def evaluate_papers(paper_selection, group_folder):
     # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
     db_further_reading = f.column_count_plot_store(paper_selection, path_group, keyword="Relevant cited papers")
     if C.RETRIEVE_METADATA is True:
-        db_further_reading = f.add_metadata_based_on_C.DOI(db_further_reading, "Relevant cited papers")
+        db_further_reading = f.add_metadata_based_on_doi(db_further_reading, "Relevant cited papers")
         db_further_reading.to_C.CSV(path_group+f"/further_reading_list.C.CSV")
 
     # Evaluate Keywords
@@ -62,6 +62,7 @@ def evaluate_papers(paper_selection, group_folder):
     # ... and model types
     single_choice_list = ["Correlation and Regession","Formulaic Calculation","Energy System Model","Integrated Assessment Model","Agent-based modeling","Macro-Economic Model"]
     f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "model_type", dropdown_list_name, dropdown_list_choices, single_choice_list)
+
 
 
 single_choice_list = ["Correlation and Regession", "Formulaic Calculation", "Energy System Model",
@@ -92,8 +93,8 @@ f.column_count_plot_store(indicators, C.path_base, keyword="Indicator")
 
 # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
 if C.RETRIEVE_METADATA is True:
-    indicators = f.add_metadata_based_on_C.DOI(indicators, "C.DOI")
-    indicators.to_C.CSV(C.FILENAME_INDICATORS+"_with_metadata.C.CSV")
+    indicators = f.add_metadata_based_on_doi(indicators, C.DOI)
+    indicators.to_csv(C.FILENAME_INDICATORS+"_with_metadata.csv")
 
 ##############################################
 # Evaluate Papers and Indicators in parallel #

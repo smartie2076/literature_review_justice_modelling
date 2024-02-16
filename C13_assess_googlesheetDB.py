@@ -21,8 +21,10 @@ FILENAME_DEFINITIONS = (
 CSV = ".csv"
 PNG = ".png"
 
+DOI = "DOI"
+
 PARAMETER = "parameter"  # parameters/answer options
-DOI = "doi"
+COUNT = "count"
 
 RESULT_FOLDER = f"{path_base}-Evaluation"
 
@@ -35,3 +37,14 @@ print("Drop-Down-Definitions:")
 print(definitions_justice)
 print(definitions_relevance)
 print(definitions_umbrella)
+
+LIST_MODELLING_STEPS = ['Scenarios', 'Parameterization / Input factors', 'Pre-processing', 'Simulation', 'Optimization', 'Result processing']
+
+MT_CORR = "Correlation and Regession"
+MT_FORM = 'Formulaic Calculation'
+MT_ESM = 'Energy System Model'
+MT_IAM =  "Integrated Assessment Model"
+MT_AGENT = "Agent-based modeling"
+MT_CGE = "Macro-Economic Model"
+
+LIST_MODEL_TYPES = [MT_CORR, MT_FORM, MT_ESM, MT_IAM, MT_AGENT, MT_CGE]

@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import requests
 import bibtexparser
+import C13_assess_googlesheetDB as C
 
 def get_list_from_list_of_str(list_of_str, sep=","):
     list_of_answers = []
@@ -64,9 +65,9 @@ def column_count_plot_store(df, path_base, keyword):
     df = pd.DataFrame(list)
     df = df.value_counts().reset_index().rename(columns={0: keyword, 1: "count"})
     print(f"In total, {len(df.index)} {keyword} items are collected.")
-    df.to_csv(path_base + f"/{keyword}.csv", index=False)
+    df.to_csv(path_base + f"/{keyword}"+C.CSV, index=False)
     df.plot(x=keyword, y="count", kind="bar")
-    plt.savefig(path_base + f"/{keyword}.png", bbox_inches="tight")
+    plt.savefig(path_base + f"/{keyword}"+C.PNG, bbox_inches="tight")
     plt.close()
     return df
 

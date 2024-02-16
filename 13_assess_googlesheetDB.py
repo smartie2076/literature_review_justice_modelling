@@ -82,6 +82,10 @@ for group in paper_groups.keys():
 
 indicators = pd.read_csv(C.FILENAME_INDICATORS + C.CSV,header=2, skiprows=[3,4], sep=";")
 indicators = indicators.drop(columns=indicators.columns[0])
+# Fix incorrectly parsed columns, this should mainly happen due to incorrect entries in the DB
+parsing_error_columns = [C.MT_FORM, C.MT_ESM]
+for parsing_column in parsing_error_columns:
+    indicators[parsing_column] = pd.to_numeric(indicators[parsing_column], errors='coerce')
 print(f"Number of identified indicators: {len(indicators.index)}")
 print(f"Columns: {indicators.columns.tolist()}")
 print(indicators.head())

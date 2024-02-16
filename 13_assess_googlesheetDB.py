@@ -97,6 +97,9 @@ if C.RETRIEVE_METADATA is True:
     indicators = f.add_metadata_based_on_doi(indicators, C.DOI)
     indicators.to_csv(C.FILENAME_INDICATORS+"_with_metadata.csv", index=False)
 
+f.create_matrix_from_list_attributed_to_multiple_choice(indicators, C.path_base, name ="Modelling-Steps-Methods", column_with_list="List of Methods", multiple_choice_list = C.LIST_MODELLING_STEPS)
+f.create_matrix_from_list_attributed_to_multiple_choice(indicators, C.path_base, name ="Model-Types-Methods", column_with_list="List of Methods", multiple_choice_list = C.LIST_MODEL_TYPES)
+
 ##############################################
 # Evaluate Papers and Indicators in parallel #
 ##############################################

@@ -18,7 +18,7 @@ print(papers.head())
 # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
 if C.RETRIEVE_METADATA is True:
     papers = f.add_metadata_based_on_doi(papers, C.DOI)
-    papers.to_csv(C.FILENAME_PAPERS+"_with_metadata.CSV")
+    papers.to_csv(C.FILENAME_PAPERS+"_with_metadata.csv", index=False)
 def evaluate_papers(paper_selection, group_folder):
     path_group = C.path_base + "/" + group_folder
     if os.path.isdir(path_group):
@@ -94,7 +94,7 @@ f.column_count_plot_store(indicators, C.path_base, keyword="Indicator")
 # Retrieve Metadata based on C.DOI (Authors, Title, Year, Journal)
 if C.RETRIEVE_METADATA is True:
     indicators = f.add_metadata_based_on_doi(indicators, C.DOI)
-    indicators.to_csv(C.FILENAME_INDICATORS+"_with_metadata.csv")
+    indicators.to_csv(C.FILENAME_INDICATORS+"_with_metadata.csv", index=False)
 
 ##############################################
 # Evaluate Papers and Indicators in parallel #

@@ -48,27 +48,24 @@ def evaluate_papers(paper_selection, group_folder):
     filename = "Justice-concept-"
 
     # ... and geographical scale
-    single_choice_list = ["Global","Continent/Union","Country-level","State/Region","City/municipality","Community","Households"]
-    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "geoscale", dropdown_list_name, dropdown_list_choices, single_choice_list)
+    multiple_choice_list = ["Global","Continent/Union","Country-level","State/Region","City/municipality","Community","Households"]
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "geoscale", dropdown_list_name, dropdown_list_choices, multiple_choice_list)
     # ... and time scale
-    single_choice_list = ["Past", "Present", "Near future", "Far future"]
-    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "timescale", dropdown_list_name, dropdown_list_choices, single_choice_list)
+    multiple_choice_list = ["Past", "Present", "Near future", "Far future"]
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "timescale", dropdown_list_name, dropdown_list_choices, multiple_choice_list)
     # ... and sectors
-    single_choice_list = ["Electricity","Heating","Cooling","Buildings","Industry","Mobility and Transport"]
-    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "sectors", dropdown_list_name, dropdown_list_choices, single_choice_list)
+    multiple_choice_list = ["Electricity","Heating","Cooling","Buildings","Industry","Mobility and Transport"]
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "sectors", dropdown_list_name, dropdown_list_choices, multiple_choice_list)
     # ... and energy topics
-    single_choice_list = ["Demand Assessment","Energy System Planning","Sector Coupling","Flexibility","Energy Access","Sufficiency","Policy","Technology-Specific","Digitalization","CO2 Emissions","Planetary ressources"]
-    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "energy_topic", dropdown_list_name, dropdown_list_choices, single_choice_list)
+    multiple_choice_list = ["Demand Assessment","Energy System Planning","Sector Coupling","Flexibility","Energy Access","Sufficiency","Policy","Technology-Specific","Digitalization","CO2 Emissions","Planetary ressources"]
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "energy_topic", dropdown_list_name, dropdown_list_choices, multiple_choice_list)
     # ... and model types
-    single_choice_list = ["Correlation and Regession","Formulaic Calculation","Energy System Model","Integrated Assessment Model","Agent-based modeling","Macro-Economic Model"]
-    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "model_type", dropdown_list_name, dropdown_list_choices, single_choice_list)
+    multiple_choice_list = C.LIST_MODEL_TYPES
+    f.combine_dropdown_and_true_false(paper_selection, path_group, filename + "model_type", dropdown_list_name, dropdown_list_choices, multiple_choice_list)
 
 
 
-single_choice_list = ["Correlation and Regession", "Formulaic Calculation", "Energy System Model",
-                      "Integrated Assessment Model", "Agent-based modeling", "Macro-Economic Model"]
-
-exclude_regressions = papers.loc[papers["Correlation and Regession"]==1].loc[papers["Formulaic Calculation"]==0].loc[papers["Energy System Model"]==0].loc[papers["Integrated Assessment Model"]==0].loc[papers["Agent-based modeling"]==0].loc[papers["Macro-Economic Model"]==0]
+exclude_regressions = papers.loc[papers[C.MT_CORR]==1].loc[papers[C.MT_FORM]==0].loc[papers[C.MT_ESM]==0].loc[papers[C.MT_IAM]==0].loc[papers[C.MT_AGENT]==0].loc[papers[C.MT_CGE]==0]
 
 paper_groups = {
     "All": papers,
